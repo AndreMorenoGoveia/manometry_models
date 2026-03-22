@@ -7,6 +7,8 @@ import torch
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
+from manometry_models.dataset_rules import is_offline_augmented_file, is_supported_image_file
+
 NORMALIZATION_MEAN = (0.5, 0.5, 0.5)
 NORMALIZATION_STD = (0.5, 0.5, 0.5)
 
@@ -18,13 +20,15 @@ class DataBundle:
     test_loader: DataLoader
     class_names: list[str]
     class_counts: dict[str, int]
+    raw_class_counts: dict[str, int]
+    excluded_train_class_counts: dict[str, int]
 
 
 def build_transforms(image_size: int, augment: bool) -> tuple[transforms.Compose, transforms.Compose]:
     train_steps: list[transforms.Transform] = [transforms.Resize((image_size, image_size))]
     if augment:
-        # Keep online augmentation conservative because the training split already
-        # includes offline augmented examples.
+        # Keep online augmentation conservative to preserve the structure of
+        # the manometry plots.
         train_steps.append(transforms.RandomAffine(degrees=3, translate=(0.02, 0.02)))
     train_steps.extend(
         [
@@ -43,10 +47,29 @@ def build_transforms(image_size: int, augment: bool) -> tuple[transforms.Compose
     return transforms.Compose(train_steps), eval_transform
 
 
-def count_images_by_class(split_dir: Path) -> dict[str, int]:
+def is_allowed_image_file(path: str | Path, include_offline_augmented: bool) -> bool:
+    if not is_supported_image_file(path):
+        return False
+    if include_offline_augmented:
+        return True
+    return not is_offline_augmented_file(path)
+
+
+def build_image_validator(include_offline_augmented: bool):
+    def validator(path: str) -> bool:
+        return is_allowed_image_file(path, include_offline_augmented=include_offline_augmented)
+
+    return validator
+
+
+def count_images_by_class(split_dir: Path, include_offline_augmented: bool = True) -> dict[str, int]:
     counts: dict[str, int] = {}
     for class_dir in sorted(path for path in split_dir.iterdir() if path.is_dir()):
-        counts[class_dir.name] = sum(1 for path in class_dir.rglob("*") if path.is_file())
+        counts[class_dir.name] = sum(
+            1
+            for path in class_dir.rglob("*")
+            if path.is_file() and is_allowed_image_file(path, include_offline_augmented=include_offline_augmented)
+        )
     return counts
 
 
@@ -63,6 +86,7 @@ def create_dataloaders(
     batch_size: int,
     num_workers: int,
     augment: bool = False,
+    include_offline_augmented_train: bool = False,
 ) -> DataBundle:
     data_path = Path(data_dir)
     train_dir = data_path / "train"
@@ -76,7 +100,11 @@ def create_dataloaders(
 
     train_transform, eval_transform = build_transforms(image_size=image_size, augment=augment)
 
-    train_dataset = datasets.ImageFolder(train_dir, transform=train_transform)
+    train_dataset = datasets.ImageFolder(
+        train_dir,
+        transform=train_transform,
+        is_valid_file=build_image_validator(include_offline_augmented=include_offline_augmented_train),
+    )
     val_dataset = datasets.ImageFolder(val_dir, transform=eval_transform)
     test_dataset = datasets.ImageFolder(test_dir, transform=eval_transform)
 
@@ -93,11 +121,22 @@ def create_dataloaders(
     val_loader = DataLoader(val_dataset, shuffle=False, **loader_kwargs)
     test_loader = DataLoader(test_dataset, shuffle=False, **loader_kwargs)
 
+    raw_class_counts = count_images_by_class(train_dir, include_offline_augmented=True)
+    effective_class_counts = count_images_by_class(
+        train_dir,
+        include_offline_augmented=include_offline_augmented_train,
+    )
+    excluded_train_class_counts = {
+        class_name: raw_class_counts[class_name] - effective_class_counts[class_name]
+        for class_name in raw_class_counts
+    }
+
     return DataBundle(
         train_loader=train_loader,
         val_loader=val_loader,
         test_loader=test_loader,
         class_names=train_dataset.classes,
-        class_counts=count_images_by_class(train_dir),
+        class_counts=effective_class_counts,
+        raw_class_counts=raw_class_counts,
+        excluded_train_class_counts=excluded_train_class_counts,
     )
-

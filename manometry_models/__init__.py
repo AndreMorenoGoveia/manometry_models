@@ -2,8 +2,8 @@
 
 __all__ = [
     "data",
+    "dataset_rules",
     "metrics",
     "model",
     "training",
 ]
-

@@ -6,6 +6,7 @@ The implementation added to this repository focuses on a pragmatic baseline:
 
 - a custom CNN built from scratch for six image classes,
 - training with the existing `train`, `val`, and `test` folder split,
+- default filtering of offline augmented files that were mixed into `data/train`,
 - class-weighted loss to mitigate imbalance,
 - checkpoint saving, training history export, and test metrics export,
 - a standalone prediction script for single-image inference.
@@ -29,7 +30,9 @@ data/
 
 All files are `.jpg` images. A quick inspection of the repository shows that many original images are `600x588`, while the training split also includes resized and augmented derivatives. The training script therefore resizes every image to a fixed square resolution before feeding it to the network.
 
-The training split also appears to contain offline augmentation already, based on file names such as `rotateImage`, `brightnessE`, `addGaussianNoise`, `addSaltAndPepperNoise`, `resizeImage`, and `saturationE`.
+The raw training split contains offline augmentation mixed with the original files, based on filename prefixes such as `rotateImage`, `brightnessE`, `addGaussianNoise`, `addSaltAndPepperNoise`, `resizeImage`, `saturationE`, and `cesun`.
+
+That raw layout is useful as source data, but it is a poor default training input because the augmented derivatives are already materialized as separate files. The training pipeline now filters those files out by default and trains on the original-like images only, while keeping `val` and `test` unchanged.
 
 ## Classes and Split Sizes
 
@@ -42,7 +45,7 @@ The CNN is configured for the following six classes:
 5. `Jackhammer`
 6. `normal`
 
-Dataset size by split:
+Raw repository size by split:
 
 | Split | Bradycardia_type_II | DES | EGJ | IEM | Jackhammer | normal | Total |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -51,7 +54,13 @@ Dataset size by split:
 | Test | 35 | 67 | 48 | 96 | 20 | 195 | 461 |
 | Overall | 934 | 1,774 | 1,248 | 2,520 | 520 | 5,070 | 12,066 |
 
-The dataset is imbalanced, especially between `normal` and `Jackhammer`. To address this, the training code uses class-weighted cross-entropy by default.
+In the raw training split, each original-like image is accompanied by seven offline augmentation variants. After filtering those variants out, the effective training split used by default is:
+
+| Split | Bradycardia_type_II | DES | EGJ | IEM | Jackhammer | normal | Total |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Train used by default | 108 | 205 | 144 | 291 | 60 | 585 | 1,393 |
+
+The dataset remains imbalanced, especially between `normal` and `Jackhammer`. To address this, the training code uses class-weighted cross-entropy by default.
 
 ## CNN Architecture
 
@@ -75,6 +84,7 @@ Main training choices:
 - optimizer: `AdamW`,
 - scheduler: `ReduceLROnPlateau`,
 - loss: `CrossEntropyLoss`,
+- raw offline training augmentations: excluded by default,
 - class imbalance handling: inverse-frequency class weights,
 - default image size: `224`,
 - default batch size: `32`,
@@ -87,6 +97,7 @@ Validation is run after every epoch. The best checkpoint is selected using valid
 
 - [train_cnn.py](/home/andre/repos/manometry_models/train_cnn.py): trains the CNN and evaluates it on the test split.
 - [predict_cnn.py](/home/andre/repos/manometry_models/predict_cnn.py): runs inference on a single image with a saved checkpoint.
+- [prepare_dataset.py](/home/andre/repos/manometry_models/prepare_dataset.py): creates a clean dataset copy without offline augmented training files.
 - [manometry_models/data.py](/home/andre/repos/manometry_models/manometry_models/data.py): dataset loading, transforms, and class-weight utilities.
 - [manometry_models/model.py](/home/andre/repos/manometry_models/manometry_models/model.py): CNN architecture.
 - [manometry_models/metrics.py](/home/andre/repos/manometry_models/manometry_models/metrics.py): confusion matrix and classification metrics.
@@ -113,6 +124,12 @@ Run the baseline configuration:
 python3 train_cnn.py
 ```
 
+By default, this excludes offline augmented files from `data/train`. To reproduce the raw training split exactly as stored in the repository, add:
+
+```bash
+python3 train_cnn.py --include-offline-augmented
+```
+
 Example with custom settings:
 
 ```bash
@@ -131,9 +148,39 @@ Useful options:
 
 - `--device auto|cpu|cuda|mps`
 - `--no-class-weights`
+- `--include-offline-augmented`
 - `--dropout 0.35`
 - `--weight-decay 1e-4`
 - `--seed 42`
+
+## Create a Clean Dataset Copy
+
+If you want to physically separate the raw mixed training split from the cleaned training split, use:
+
+```bash
+python3 prepare_dataset.py \
+  --source-dir data \
+  --output-dir data_clean
+```
+
+This creates:
+
+- `data_clean/train` with offline augmented training files removed,
+- `data_clean/val` unchanged,
+- `data_clean/test` unchanged,
+- `data_clean/dataset_report.json` with counts and excluded-file totals.
+
+The default mode is `hardlink`, which avoids duplicating image bytes when the filesystem supports it. If you prefer independent copies, use:
+
+```bash
+python3 prepare_dataset.py --mode copy
+```
+
+Once created, you can train from the cleaned directory:
+
+```bash
+python3 train_cnn.py --data-dir data_clean
+```
 
 ## Training Outputs
 
@@ -177,7 +224,8 @@ python3 predict_cnn.py \
 
 - The code assumes the current folder structure is preserved.
 - Images are normalized with mean and standard deviation `(0.5, 0.5, 0.5)`.
-- Online augmentation is intentionally light because the training set already contains many augmented files.
+- Offline augmented files in `data/train` are filtered out by default based on their filename prefixes.
+- Online augmentation is intentionally light and optional.
 - The checkpoint stores the class order, so inference remains consistent with training.
 - The best model is selected by validation macro F1 to reduce bias toward the majority class.
 
@@ -189,7 +237,6 @@ This baseline is a good starting point, but there are several obvious improvemen
 2. add early stopping,
 3. add experiment tracking,
 4. create plots for loss, accuracy, and confusion matrix,
-5. verify whether offline augmented files should remain mixed with originals in the training set.
 
 ## Quick Start
 

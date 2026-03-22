@@ -28,12 +28,17 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--augment",
         action="store_true",
-        help="Enable light online augmentation on top of the already augmented training split.",
+        help="Enable light online augmentation after loading the filtered training split.",
     )
     parser.add_argument(
         "--no-class-weights",
         action="store_true",
         help="Disable class-weighted cross-entropy.",
+    )
+    parser.add_argument(
+        "--include-offline-augmented",
+        action="store_true",
+        help="Include offline augmented files found in data/train instead of filtering them out.",
     )
     return parser
 
@@ -65,9 +70,13 @@ def main() -> None:
         batch_size=args.batch_size,
         num_workers=args.num_workers,
         augment=args.augment,
+        include_offline_augmented_train=args.include_offline_augmented,
     )
     print("Classes:", ", ".join(bundle.class_names))
-    print("Training images per class:", bundle.class_counts)
+    print("Training images per class (effective):", bundle.class_counts)
+    if any(bundle.excluded_train_class_counts.values()):
+        print("Excluded offline augmented training files:", bundle.excluded_train_class_counts)
+        print("Training images per class (raw):", bundle.raw_class_counts)
 
     model = ManometryCNN(num_classes=len(bundle.class_names), dropout=args.dropout).to(device)
 
@@ -111,4 +120,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
