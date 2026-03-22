@@ -7,7 +7,7 @@ from pathlib import Path
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Run inference with a trained manometry CNN checkpoint.",
+        description="Run inference with a trained manometry model checkpoint.",
     )
     parser.add_argument("--checkpoint", type=Path, required=True, help="Path to best_model.pt.")
     parser.add_argument("--image", type=Path, required=True, help="Path to a single JPG image.")
@@ -31,7 +31,7 @@ def main() -> None:
     from torchvision import transforms
 
     from manometry_models.data import NORMALIZATION_MEAN, NORMALIZATION_STD
-    from manometry_models.model import ManometryCNN
+    from manometry_models.model import build_model_config, create_model
     from manometry_models.training import resolve_device
 
     if args.top_k < 1:
@@ -45,8 +45,20 @@ def main() -> None:
     checkpoint = torch.load(args.checkpoint, map_location=device)
 
     class_names = checkpoint["class_names"]
+    model_name = checkpoint.get("model_name", "cnn")
     image_size = checkpoint.get("image_size", 224)
-    model = ManometryCNN(num_classes=len(class_names))
+    dropout = float(checkpoint.get("dropout", 0.35))
+    normalization_mean = tuple(checkpoint.get("normalization_mean", NORMALIZATION_MEAN))
+    normalization_std = tuple(checkpoint.get("normalization_std", NORMALIZATION_STD))
+    aux_logits = bool(checkpoint.get("aux_logits", model_name == "inception_v3"))
+    model_config = build_model_config(
+        model_name,
+        pretrained=False,
+        dropout=dropout,
+        image_size=image_size,
+        aux_logits=aux_logits,
+    )
+    model = create_model(model_config, num_classes=len(class_names))
     model.load_state_dict(checkpoint["model_state_dict"])
     model.to(device)
     model.eval()
@@ -55,7 +67,7 @@ def main() -> None:
         [
             transforms.Resize((image_size, image_size)),
             transforms.ToTensor(),
-            transforms.Normalize(mean=NORMALIZATION_MEAN, std=NORMALIZATION_STD),
+            transforms.Normalize(mean=normalization_mean, std=normalization_std),
         ]
     )
 
@@ -88,6 +100,7 @@ def main() -> None:
         return
 
     print(f"Image: {result['image']}")
+    print(f"Model: {model_name}")
     print(f"Predicted class: {result['predicted_class']}")
     print(f"Confidence: {result['confidence']:.4f}")
     print("Top-k predictions:")

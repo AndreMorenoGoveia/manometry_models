@@ -40,6 +40,22 @@ def resolve_device(device_name: str) -> torch.device:
     return torch.device(normalized)
 
 
+def unpack_model_outputs(outputs: object) -> tuple[torch.Tensor, torch.Tensor | None]:
+    if isinstance(outputs, torch.Tensor):
+        return outputs, None
+    if hasattr(outputs, "logits"):
+        return outputs.logits, getattr(outputs, "aux_logits", None)
+    if isinstance(outputs, (tuple, list)):
+        logits = outputs[0]
+        aux_logits = outputs[1] if len(outputs) > 1 else None
+        if not isinstance(logits, torch.Tensor):
+            raise TypeError("Expected the main model output to be a tensor.")
+        if aux_logits is not None and not isinstance(aux_logits, torch.Tensor):
+            aux_logits = None
+        return logits, aux_logits
+    raise TypeError(f"Unsupported model output type: {type(outputs)!r}")
+
+
 def train_one_epoch(
     model: nn.Module,
     dataloader: torch.utils.data.DataLoader,
@@ -64,8 +80,11 @@ def train_one_epoch(
         labels = labels.to(device, non_blocking=True)
 
         optimizer.zero_grad(set_to_none=True)
-        logits = model(images)
+        outputs = model(images)
+        logits, aux_logits = unpack_model_outputs(outputs)
         loss = criterion(logits, labels)
+        if aux_logits is not None:
+            loss = loss + 0.4 * criterion(aux_logits, labels)
         loss.backward()
         optimizer.step()
 
@@ -104,7 +123,8 @@ def evaluate(
     for images, labels in progress_bar:
         images = images.to(device, non_blocking=True)
         labels = labels.to(device, non_blocking=True)
-        logits = model(images)
+        outputs = model(images)
+        logits, _ = unpack_model_outputs(outputs)
         loss = criterion(logits, labels)
         predictions = logits.argmax(dim=1)
 
@@ -143,6 +163,7 @@ def save_checkpoint(
     image_size: int,
     epoch: int,
     metrics: dict[str, object],
+    model_metadata: dict[str, object],
 ) -> None:
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -153,6 +174,7 @@ def save_checkpoint(
             "image_size": image_size,
             "epoch": epoch,
             "metrics": metrics,
+            **model_metadata,
         },
         output,
     )
@@ -171,6 +193,7 @@ def train_model(
     epochs: int,
     output_dir: str | Path,
     image_size: int,
+    model_metadata: dict[str, object],
 ) -> dict[str, object]:
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
@@ -223,6 +246,7 @@ def train_model(
                 image_size=image_size,
                 epoch=epoch,
                 metrics=val_metrics,
+                model_metadata=model_metadata,
             )
 
         print(
@@ -257,6 +281,7 @@ def train_model(
         {
             "best_epoch": best_epoch,
             "best_val_macro_f1": best_macro_f1,
+            **model_metadata,
             "history_path": str((output_path / "history.csv").resolve()),
             "best_checkpoint_path": str(best_checkpoint_path.resolve()),
             "test_metrics_path": str((output_path / "test_metrics.json").resolve()),
@@ -272,5 +297,6 @@ def train_model(
         "best_checkpoint_path": best_checkpoint_path,
         "test_metrics_path": output_path / "test_metrics.json",
         "test_metrics": test_metrics,
+        **model_metadata,
         **plot_paths,
     }

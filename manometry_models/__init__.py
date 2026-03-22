@@ -5,6 +5,7 @@ __all__ = [
     "dataset_rules",
     "metrics",
     "model",
+    "model_registry",
     "plots",
     "training",
 ]

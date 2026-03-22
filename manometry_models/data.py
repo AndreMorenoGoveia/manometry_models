@@ -8,9 +8,10 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
 from manometry_models.dataset_rules import is_offline_augmented_file, is_supported_image_file
+from manometry_models.model_registry import DEFAULT_NORMALIZATION_MEAN, DEFAULT_NORMALIZATION_STD
 
-NORMALIZATION_MEAN = (0.5, 0.5, 0.5)
-NORMALIZATION_STD = (0.5, 0.5, 0.5)
+NORMALIZATION_MEAN = DEFAULT_NORMALIZATION_MEAN
+NORMALIZATION_STD = DEFAULT_NORMALIZATION_STD
 
 
 @dataclass(slots=True)
@@ -24,7 +25,12 @@ class DataBundle:
     excluded_train_class_counts: dict[str, int]
 
 
-def build_transforms(image_size: int, augment: bool) -> tuple[transforms.Compose, transforms.Compose]:
+def build_transforms(
+    image_size: int,
+    augment: bool,
+    normalization_mean: tuple[float, float, float],
+    normalization_std: tuple[float, float, float],
+) -> tuple[transforms.Compose, transforms.Compose]:
     train_steps: list[transforms.Transform] = [transforms.Resize((image_size, image_size))]
     if augment:
         # Keep online augmentation conservative to preserve the structure of
@@ -33,7 +39,7 @@ def build_transforms(image_size: int, augment: bool) -> tuple[transforms.Compose
     train_steps.extend(
         [
             transforms.ToTensor(),
-            transforms.Normalize(mean=NORMALIZATION_MEAN, std=NORMALIZATION_STD),
+            transforms.Normalize(mean=normalization_mean, std=normalization_std),
         ]
     )
 
@@ -41,7 +47,7 @@ def build_transforms(image_size: int, augment: bool) -> tuple[transforms.Compose
         [
             transforms.Resize((image_size, image_size)),
             transforms.ToTensor(),
-            transforms.Normalize(mean=NORMALIZATION_MEAN, std=NORMALIZATION_STD),
+            transforms.Normalize(mean=normalization_mean, std=normalization_std),
         ]
     )
     return transforms.Compose(train_steps), eval_transform
@@ -87,6 +93,8 @@ def create_dataloaders(
     num_workers: int,
     augment: bool = False,
     include_offline_augmented_train: bool = False,
+    normalization_mean: tuple[float, float, float] = NORMALIZATION_MEAN,
+    normalization_std: tuple[float, float, float] = NORMALIZATION_STD,
 ) -> DataBundle:
     data_path = Path(data_dir)
     train_dir = data_path / "train"
@@ -98,7 +106,12 @@ def create_dataloaders(
             "Expected data/train, data/val and data/test directories under the selected data directory."
         )
 
-    train_transform, eval_transform = build_transforms(image_size=image_size, augment=augment)
+    train_transform, eval_transform = build_transforms(
+        image_size=image_size,
+        augment=augment,
+        normalization_mean=normalization_mean,
+        normalization_std=normalization_std,
+    )
 
     train_dataset = datasets.ImageFolder(
         train_dir,

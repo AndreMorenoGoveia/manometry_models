@@ -1,10 +1,11 @@
-# Manometry CNN Classifier
+# Manometry Image Classifier
 
-This repository contains an image dataset of esophageal manometry studies and a complete PyTorch pipeline to train, validate, test, and use a convolutional neural network (CNN) for multi-class classification.
+This repository contains an image dataset of esophageal manometry studies and a complete PyTorch pipeline to train, validate, test, and use multiple image classification models for multi-class recognition.
 
 The implementation added to this repository focuses on a pragmatic baseline:
 
 - a custom CNN built from scratch for six image classes,
+- transfer-learning-ready backbones with `resnet18`, `efficientnet_b0`, `convnext_tiny`, `densenet201`, and `inception_v3`,
 - training with the existing `train`, `val`, and `test` folder split,
 - default filtering of offline augmented files that were mixed into `data/train`,
 - class-weighted loss to mitigate imbalance,
@@ -62,7 +63,22 @@ In the raw training split, each original-like image is accompanied by seven offl
 
 The dataset remains imbalanced, especially between `normal` and `Jackhammer`. To address this, the training code uses class-weighted cross-entropy by default.
 
-## CNN Architecture
+## Supported Models
+
+The training pipeline now supports the following architectures:
+
+| Model name | Type | Default image size | Pretrained option |
+| --- | --- | ---: | --- |
+| `cnn` | custom baseline CNN | 224 | no |
+| `resnet18` | transfer learning backbone | 224 | yes |
+| `efficientnet_b0` | transfer learning backbone | 224 | yes |
+| `convnext_tiny` | transfer learning backbone | 224 | yes |
+| `densenet201` | transfer learning backbone | 224 | yes |
+| `inception_v3` | transfer learning backbone | 299 | yes |
+
+Use `--model <name>` to switch architectures and `--pretrained` to request ImageNet weights for the torchvision backbones.
+
+## Custom CNN Architecture
 
 The model is defined in [manometry_models/model.py](/home/andre/repos/manometry_models/manometry_models/model.py). It is a compact custom CNN with batch normalization and dropout:
 
@@ -93,6 +109,8 @@ Main training choices:
 
 Validation is run after every epoch. The best checkpoint is selected using validation macro F1, which is more appropriate than raw accuracy for this class distribution.
 
+The selected architecture is stored in the checkpoint and reused automatically by [predict_cnn.py](/home/andre/repos/manometry_models/predict_cnn.py), so inference works for both the custom CNN and the transfer learning models.
+
 After training, the pipeline also generates versionable SVG plots for:
 
 - loss,
@@ -107,6 +125,7 @@ After training, the pipeline also generates versionable SVG plots for:
 - [generate_plots.py](/home/andre/repos/manometry_models/generate_plots.py): regenerates plots from an existing artifact directory.
 - [manometry_models/data.py](/home/andre/repos/manometry_models/manometry_models/data.py): dataset loading, transforms, and class-weight utilities.
 - [manometry_models/model.py](/home/andre/repos/manometry_models/manometry_models/model.py): CNN architecture.
+- [manometry_models/model_registry.py](/home/andre/repos/manometry_models/manometry_models/model_registry.py): supported model names, default image sizes, and normalization presets.
 - [manometry_models/metrics.py](/home/andre/repos/manometry_models/manometry_models/metrics.py): confusion matrix and classification metrics.
 - [manometry_models/plots.py](/home/andre/repos/manometry_models/manometry_models/plots.py): SVG plot generation for training curves and confusion matrices.
 - [manometry_models/training.py](/home/andre/repos/manometry_models/manometry_models/training.py): training loop, evaluation loop, checkpointing, and history export.
@@ -132,18 +151,33 @@ Run the baseline configuration:
 python3 train_cnn.py
 ```
 
-By default, this excludes offline augmented files from `data/train`. To reproduce the raw training split exactly as stored in the repository, add:
+By default, this trains the custom `cnn` model, excludes offline augmented files from `data/train`, and writes artifacts to `artifacts/cnn`.
+
+To reproduce the raw training split exactly as stored in the repository, add:
 
 ```bash
 python3 train_cnn.py --include-offline-augmented
+```
+
+Example with a transfer learning backbone:
+
+```bash
+python3 train_cnn.py \
+  --model resnet18 \
+  --pretrained \
+  --output-dir artifacts/resnet18_pretrained \
+  --epochs 20 \
+  --learning-rate 3e-4
 ```
 
 Example with custom settings:
 
 ```bash
 python3 train_cnn.py \
+  --model densenet201 \
+  --pretrained \
   --data-dir data \
-  --output-dir artifacts/cnn_run_01 \
+  --output-dir artifacts/densenet201_run_01 \
   --epochs 30 \
   --batch-size 32 \
   --image-size 224 \
@@ -154,12 +188,16 @@ python3 train_cnn.py \
 
 Useful options:
 
+- `--model cnn|resnet18|efficientnet_b0|convnext_tiny|densenet201|inception_v3`
+- `--pretrained`
 - `--device auto|cpu|cuda|mps`
 - `--no-class-weights`
 - `--include-offline-augmented`
 - `--dropout 0.35`
 - `--weight-decay 1e-4`
 - `--seed 42`
+
+If `--output-dir` is omitted, the script writes to `artifacts/<run-name>`, where the default run name is the selected model name or `<model>_pretrained`.
 
 ## Create a Clean Dataset Copy
 
@@ -224,7 +262,7 @@ Use a saved checkpoint and a single image:
 
 ```bash
 python3 predict_cnn.py \
-  --checkpoint artifacts/cnn/best_model.pt \
+  --checkpoint artifacts/resnet18_pretrained/best_model.pt \
   --image data/test/EGJ/11.jpg
 ```
 
@@ -232,7 +270,7 @@ Optional JSON output:
 
 ```bash
 python3 predict_cnn.py \
-  --checkpoint artifacts/cnn/best_model.pt \
+  --checkpoint artifacts/resnet18_pretrained/best_model.pt \
   --image data/test/EGJ/11.jpg \
   --json
 ```
@@ -241,9 +279,10 @@ python3 predict_cnn.py \
 
 - The code assumes the current folder structure is preserved.
 - Images are normalized with mean and standard deviation `(0.5, 0.5, 0.5)`.
+- Pretrained torchvision backbones use ImageNet normalization and their model-specific default image size.
 - Offline augmented files in `data/train` are filtered out by default based on their filename prefixes.
 - Online augmentation is intentionally light and optional.
-- The checkpoint stores the class order, so inference remains consistent with training.
+- The checkpoint stores the architecture, class order, image size, and normalization, so inference remains consistent with training.
 - The best model is selected by validation macro F1 to reduce bias toward the majority class.
 - Plot outputs are SVG files so they can be reviewed in diffs and committed per model.
 - The repository ignores binary checkpoints by default but allows `history.csv`, `test_metrics.json`, `training_summary.json`, and SVG plots inside `artifacts/` to be committed.
@@ -253,9 +292,6 @@ python3 predict_cnn.py \
 This baseline is a good starting point, but there are several obvious improvements:
 
 1. compare this custom CNN against transfer learning with `ResNet18`, `EfficientNet`, or `ConvNeXt-Tiny`,
-2. add early stopping,
-3. add experiment tracking,
-4. create plots for loss, accuracy, and confusion matrix,
 
 ## Quick Start
 
