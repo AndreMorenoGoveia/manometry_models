@@ -1,0 +1,11 @@
+{
+  "best_epoch": 20,
+  "best_val_macro_f1": 0.8995410799980164,
+  "history_path": "/home/andre/repos/manometry_models/artifacts/cnn/history.csv",
+  "best_checkpoint_path": "/home/andre/repos/manometry_models/artifacts/cnn/best_model.pt",
+  "test_metrics_path": "/home/andre/repos/manometry_models/artifacts/cnn/test_metrics.json",
+  "plots_dir": "/home/andre/repos/manometry_models/artifacts/cnn/plots",
+  "loss_plot_path": "/home/andre/repos/manometry_models/artifacts/cnn/plots/loss.svg",
+  "accuracy_plot_path": "/home/andre/repos/manometry_models/artifacts/cnn/plots/accuracy.svg",
+  "confusion_matrix_plot_path": "/home/andre/repos/manometry_models/artifacts/cnn/plots/confusion_matrix.svg"
+}

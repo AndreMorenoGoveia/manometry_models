@@ -9,6 +9,7 @@ from torch import nn
 from tqdm.auto import tqdm
 
 from manometry_models.metrics import compute_classification_metrics, save_json, update_confusion_matrix
+from manometry_models.plots import generate_plots
 
 
 def set_seed(seed: int) -> None:
@@ -245,6 +246,13 @@ def train_model(
         split_name="Test",
     )
     save_json(test_metrics, output_path / "test_metrics.json")
+    plot_paths = generate_plots(
+        history_rows=history_rows,
+        test_metrics=test_metrics,
+        output_dir=output_path,
+        model_name=output_path.name,
+        best_epoch=best_epoch,
+    )
     save_json(
         {
             "best_epoch": best_epoch,
@@ -252,6 +260,7 @@ def train_model(
             "history_path": str((output_path / "history.csv").resolve()),
             "best_checkpoint_path": str(best_checkpoint_path.resolve()),
             "test_metrics_path": str((output_path / "test_metrics.json").resolve()),
+            **plot_paths,
         },
         output_path / "training_summary.json",
     )
@@ -263,4 +272,5 @@ def train_model(
         "best_checkpoint_path": best_checkpoint_path,
         "test_metrics_path": output_path / "test_metrics.json",
         "test_metrics": test_metrics,
+        **plot_paths,
     }

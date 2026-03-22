@@ -8,7 +8,7 @@ The implementation added to this repository focuses on a pragmatic baseline:
 - training with the existing `train`, `val`, and `test` folder split,
 - default filtering of offline augmented files that were mixed into `data/train`,
 - class-weighted loss to mitigate imbalance,
-- checkpoint saving, training history export, and test metrics export,
+- checkpoint saving, training history export, test metrics export, and SVG plots,
 - a standalone prediction script for single-image inference.
 
 ## Repository Overview
@@ -93,14 +93,22 @@ Main training choices:
 
 Validation is run after every epoch. The best checkpoint is selected using validation macro F1, which is more appropriate than raw accuracy for this class distribution.
 
+After training, the pipeline also generates versionable SVG plots for:
+
+- loss,
+- accuracy,
+- confusion matrix.
+
 ## Files Added
 
 - [train_cnn.py](/home/andre/repos/manometry_models/train_cnn.py): trains the CNN and evaluates it on the test split.
 - [predict_cnn.py](/home/andre/repos/manometry_models/predict_cnn.py): runs inference on a single image with a saved checkpoint.
 - [prepare_dataset.py](/home/andre/repos/manometry_models/prepare_dataset.py): creates a clean dataset copy without offline augmented training files.
+- [generate_plots.py](/home/andre/repos/manometry_models/generate_plots.py): regenerates plots from an existing artifact directory.
 - [manometry_models/data.py](/home/andre/repos/manometry_models/manometry_models/data.py): dataset loading, transforms, and class-weight utilities.
 - [manometry_models/model.py](/home/andre/repos/manometry_models/manometry_models/model.py): CNN architecture.
 - [manometry_models/metrics.py](/home/andre/repos/manometry_models/manometry_models/metrics.py): confusion matrix and classification metrics.
+- [manometry_models/plots.py](/home/andre/repos/manometry_models/manometry_models/plots.py): SVG plot generation for training curves and confusion matrices.
 - [manometry_models/training.py](/home/andre/repos/manometry_models/manometry_models/training.py): training loop, evaluation loop, checkpointing, and history export.
 - [requirements.txt](/home/andre/repos/manometry_models/requirements.txt): Python dependencies.
 
@@ -189,7 +197,10 @@ After training, the output directory contains:
 - `best_model.pt`: checkpoint with model weights, class names, image size, epoch, and validation metrics,
 - `history.csv`: epoch-by-epoch train/validation history,
 - `test_metrics.json`: final metrics on the held-out test set,
-- `training_summary.json`: paths to the main artifacts and the best validation score.
+- `training_summary.json`: paths to the main artifacts, plots, and the best validation score,
+- `plots/loss.svg`: train and validation loss,
+- `plots/accuracy.svg`: train and validation accuracy,
+- `plots/confusion_matrix.svg`: confusion matrix for the held-out test set.
 
 `test_metrics.json` includes:
 
@@ -200,6 +211,12 @@ After training, the output directory contains:
 - weighted F1,
 - per-class precision/recall/F1/support,
 - confusion matrix.
+
+If you need to regenerate plots for a trained model, run:
+
+```bash
+python3 generate_plots.py --artifacts-dir artifacts/cnn
+```
 
 ## How to Run Inference
 
@@ -228,6 +245,8 @@ python3 predict_cnn.py \
 - Online augmentation is intentionally light and optional.
 - The checkpoint stores the class order, so inference remains consistent with training.
 - The best model is selected by validation macro F1 to reduce bias toward the majority class.
+- Plot outputs are SVG files so they can be reviewed in diffs and committed per model.
+- The repository ignores binary checkpoints by default but allows `history.csv`, `test_metrics.json`, `training_summary.json`, and SVG plots inside `artifacts/` to be committed.
 
 ## Recommended Next Steps
 
