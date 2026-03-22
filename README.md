@@ -1,0 +1,200 @@
+# Manometry CNN Classifier
+
+This repository contains an image dataset of esophageal manometry studies and a complete PyTorch pipeline to train, validate, test, and use a convolutional neural network (CNN) for multi-class classification.
+
+The implementation added to this repository focuses on a pragmatic baseline:
+
+- a custom CNN built from scratch for six image classes,
+- training with the existing `train`, `val`, and `test` folder split,
+- class-weighted loss to mitigate imbalance,
+- checkpoint saving, training history export, and test metrics export,
+- a standalone prediction script for single-image inference.
+
+## Repository Overview
+
+The dataset is already organized in the standard image-classification layout:
+
+```text
+data/
+  train/
+  val/
+  test/
+    Bradycardia_type_II/
+    DES/
+    EGJ/
+    IEM/
+    Jackhammer/
+    normal/
+```
+
+All files are `.jpg` images. A quick inspection of the repository shows that many original images are `600x588`, while the training split also includes resized and augmented derivatives. The training script therefore resizes every image to a fixed square resolution before feeding it to the network.
+
+The training split also appears to contain offline augmentation already, based on file names such as `rotateImage`, `brightnessE`, `addGaussianNoise`, `addSaltAndPepperNoise`, `resizeImage`, and `saturationE`.
+
+## Classes and Split Sizes
+
+The CNN is configured for the following six classes:
+
+1. `Bradycardia_type_II`
+2. `DES`
+3. `EGJ`
+4. `IEM`
+5. `Jackhammer`
+6. `normal`
+
+Dataset size by split:
+
+| Split | Bradycardia_type_II | DES | EGJ | IEM | Jackhammer | normal | Total |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Train | 864 | 1,640 | 1,152 | 2,328 | 480 | 4,680 | 11,144 |
+| Validation | 35 | 67 | 48 | 96 | 20 | 195 | 461 |
+| Test | 35 | 67 | 48 | 96 | 20 | 195 | 461 |
+| Overall | 934 | 1,774 | 1,248 | 2,520 | 520 | 5,070 | 12,066 |
+
+The dataset is imbalanced, especially between `normal` and `Jackhammer`. To address this, the training code uses class-weighted cross-entropy by default.
+
+## CNN Architecture
+
+The model is defined in [manometry_models/model.py](/home/andre/repos/manometry_models/manometry_models/model.py). It is a compact custom CNN with batch normalization and dropout:
+
+- input: RGB image resized to `224x224` by default,
+- feature extractor: stacked `3x3` convolutions with `ReLU`, `BatchNorm2d`, and `MaxPool2d`,
+- channel progression: `3 -> 32 -> 64 -> 128 -> 256`,
+- global aggregation: `AdaptiveAvgPool2d((1, 1))`,
+- classifier head: `Linear(256 -> 128 -> 6)` with dropout.
+
+This is intentionally a baseline architecture: small enough to train on modest hardware, but expressive enough to learn spatial patterns from manometry images.
+
+## Training Pipeline
+
+The training entry point is [train_cnn.py](/home/andre/repos/manometry_models/train_cnn.py).
+
+Main training choices:
+
+- framework: PyTorch,
+- optimizer: `AdamW`,
+- scheduler: `ReduceLROnPlateau`,
+- loss: `CrossEntropyLoss`,
+- class imbalance handling: inverse-frequency class weights,
+- default image size: `224`,
+- default batch size: `32`,
+- default epochs: `20`,
+- default seed: `42`.
+
+Validation is run after every epoch. The best checkpoint is selected using validation macro F1, which is more appropriate than raw accuracy for this class distribution.
+
+## Files Added
+
+- [train_cnn.py](/home/andre/repos/manometry_models/train_cnn.py): trains the CNN and evaluates it on the test split.
+- [predict_cnn.py](/home/andre/repos/manometry_models/predict_cnn.py): runs inference on a single image with a saved checkpoint.
+- [manometry_models/data.py](/home/andre/repos/manometry_models/manometry_models/data.py): dataset loading, transforms, and class-weight utilities.
+- [manometry_models/model.py](/home/andre/repos/manometry_models/manometry_models/model.py): CNN architecture.
+- [manometry_models/metrics.py](/home/andre/repos/manometry_models/manometry_models/metrics.py): confusion matrix and classification metrics.
+- [manometry_models/training.py](/home/andre/repos/manometry_models/manometry_models/training.py): training loop, evaluation loop, checkpointing, and history export.
+- [requirements.txt](/home/andre/repos/manometry_models/requirements.txt): Python dependencies.
+
+## Installation
+
+Use Python 3.10+.
+
+Create a virtual environment if desired, then install the dependencies:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+## How to Train
+
+Run the baseline configuration:
+
+```bash
+python3 train_cnn.py
+```
+
+Example with custom settings:
+
+```bash
+python3 train_cnn.py \
+  --data-dir data \
+  --output-dir artifacts/cnn_run_01 \
+  --epochs 30 \
+  --batch-size 32 \
+  --image-size 224 \
+  --learning-rate 1e-3 \
+  --num-workers 4 \
+  --augment
+```
+
+Useful options:
+
+- `--device auto|cpu|cuda|mps`
+- `--no-class-weights`
+- `--dropout 0.35`
+- `--weight-decay 1e-4`
+- `--seed 42`
+
+## Training Outputs
+
+After training, the output directory contains:
+
+- `best_model.pt`: checkpoint with model weights, class names, image size, epoch, and validation metrics,
+- `history.csv`: epoch-by-epoch train/validation history,
+- `test_metrics.json`: final metrics on the held-out test set,
+- `training_summary.json`: paths to the main artifacts and the best validation score.
+
+`test_metrics.json` includes:
+
+- overall accuracy,
+- macro precision,
+- macro recall,
+- macro F1,
+- weighted F1,
+- per-class precision/recall/F1/support,
+- confusion matrix.
+
+## How to Run Inference
+
+Use a saved checkpoint and a single image:
+
+```bash
+python3 predict_cnn.py \
+  --checkpoint artifacts/cnn/best_model.pt \
+  --image data/test/EGJ/11.jpg
+```
+
+Optional JSON output:
+
+```bash
+python3 predict_cnn.py \
+  --checkpoint artifacts/cnn/best_model.pt \
+  --image data/test/EGJ/11.jpg \
+  --json
+```
+
+## Implementation Notes
+
+- The code assumes the current folder structure is preserved.
+- Images are normalized with mean and standard deviation `(0.5, 0.5, 0.5)`.
+- Online augmentation is intentionally light because the training set already contains many augmented files.
+- The checkpoint stores the class order, so inference remains consistent with training.
+- The best model is selected by validation macro F1 to reduce bias toward the majority class.
+
+## Recommended Next Steps
+
+This baseline is a good starting point, but there are several obvious improvements:
+
+1. compare this custom CNN against transfer learning with `ResNet18`, `EfficientNet`, or `ConvNeXt-Tiny`,
+2. add early stopping,
+3. add experiment tracking,
+4. create plots for loss, accuracy, and confusion matrix,
+5. verify whether offline augmented files should remain mixed with originals in the training set.
+
+## Quick Start
+
+```bash
+pip install -r requirements.txt
+python3 train_cnn.py --epochs 20 --output-dir artifacts/cnn
+python3 predict_cnn.py --checkpoint artifacts/cnn/best_model.pt --image data/test/normal/13.jpg
+```
