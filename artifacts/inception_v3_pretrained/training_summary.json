@@ -1,0 +1,25 @@
+{
+  "best_epoch": 8,
+  "best_val_macro_f1": 0.9974092841148376,
+  "model_name": "inception_v3",
+  "pretrained": true,
+  "dropout": 0.35,
+  "normalization_mean": [
+    0.485,
+    0.456,
+    0.406
+  ],
+  "normalization_std": [
+    0.229,
+    0.224,
+    0.225
+  ],
+  "aux_logits": true,
+  "history_path": "/home/andre/repos/manometry_models/artifacts/inception_v3_pretrained/history.csv",
+  "best_checkpoint_path": "/home/andre/repos/manometry_models/artifacts/inception_v3_pretrained/best_model.pt",
+  "test_metrics_path": "/home/andre/repos/manometry_models/artifacts/inception_v3_pretrained/test_metrics.json",
+  "plots_dir": "/home/andre/repos/manometry_models/artifacts/inception_v3_pretrained/plots",
+  "loss_plot_path": "/home/andre/repos/manometry_models/artifacts/inception_v3_pretrained/plots/loss.svg",
+  "accuracy_plot_path": "/home/andre/repos/manometry_models/artifacts/inception_v3_pretrained/plots/accuracy.svg",
+  "confusion_matrix_plot_path": "/home/andre/repos/manometry_models/artifacts/inception_v3_pretrained/plots/confusion_matrix.svg"
+}

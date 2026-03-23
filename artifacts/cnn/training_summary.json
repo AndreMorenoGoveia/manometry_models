@@ -1,6 +1,20 @@
 {
   "best_epoch": 20,
   "best_val_macro_f1": 0.8995410799980164,
+  "model_name": "cnn",
+  "pretrained": false,
+  "dropout": 0.35,
+  "normalization_mean": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "normalization_std": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "aux_logits": false,
   "history_path": "/home/andre/repos/manometry_models/artifacts/cnn/history.csv",
   "best_checkpoint_path": "/home/andre/repos/manometry_models/artifacts/cnn/best_model.pt",
   "test_metrics_path": "/home/andre/repos/manometry_models/artifacts/cnn/test_metrics.json",
