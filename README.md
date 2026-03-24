@@ -53,6 +53,42 @@ data/
   test/
 ```
 
+## Classes Clínicas do Dataset
+
+As descrições abaixo são resumos voltados para o contexto de manometria esofágica de alta resolução (HRM). Elas servem para documentar os rótulos do dataset e não substituem interpretação clínica ou laudo especializado. As imagens mostradas são exemplos representativos copiados do conjunto `data/test` para `assets/readme_examples/`.
+
+<table>
+  <tr>
+    <td valign="top"><strong><code>Bradycardia_type_II</code></strong><br>O dataset usa esse nome, mas no contexto de HRM ele é mais compatível com um padrão de <strong>acalasia tipo II</strong>: relaxamento inadequado da junção esofagogástrica com ausência de peristalse efetiva e pressurização panesofágica em parte das deglutições.</td>
+    <td><img src="assets/readme_examples/bradycardia_type_ii.jpg" alt="Exemplo de HRM da classe Bradycardia_type_II" width="260"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><code>DES</code></strong><br><strong>Distal Esophageal Spasm</strong>. Representa um padrão com contrações prematuras ou espásticas no esôfago distal, frequentemente associado a disfagia e dor torácica não cardíaca.</td>
+    <td><img src="assets/readme_examples/des.jpg" alt="Exemplo de HRM da classe DES" width="260"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><code>EGJ</code></strong><br><strong>Esophagogastric Junction Outflow Obstruction</strong>. Há dificuldade de passagem na junção entre esôfago e estômago, com relaxamento inadequado da região distal, mas sem necessariamente preencher todos os critérios de acalasia.</td>
+    <td><img src="assets/readme_examples/egj.jpg" alt="Exemplo de HRM da classe EGJ" width="260"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><code>IEM</code></strong><br><strong>Ineffective Esophageal Motility</strong>. Predomina um padrão de deglutições fracas, falhas ou fragmentadas, geralmente associado a pior depuração do bolo alimentar ao longo do esôfago.</td>
+    <td><img src="assets/readme_examples/iem.jpg" alt="Exemplo de HRM da classe IEM" width="260"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><code>Jackhammer</code></strong><br><strong>Hypercontractile Esophagus</strong>. Representa contrações excessivamente vigorosas; no subtipo jackhammer elas tendem a ser muito intensas e prolongadas em comparação ao padrão normal.</td>
+    <td><img src="assets/readme_examples/jackhammer.jpg" alt="Exemplo de HRM da classe Jackhammer" width="260"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><code>normal</code></strong><br>Padrão fisiológico de referência, com peristalse organizada e relaxamento adequado da junção esofagogástrica durante a deglutição.</td>
+    <td><img src="assets/readme_examples/normal.jpg" alt="Exemplo de HRM da classe normal" width="260"></td>
+  </tr>
+</table>
+
+Referências clínicas resumidas:
+
+- Chicago Classification v4.0: https://pmc.ncbi.nlm.nih.gov/articles/PMC8034247/
+- Review clínica da CCv4.0: https://pmc.ncbi.nlm.nih.gov/articles/PMC9021169/
+
 ## Observações Sobre os Dados
 
 O diretório `data/train` mistura imagens originais com arquivos de aumento offline já materializados, identificados por prefixos como:
