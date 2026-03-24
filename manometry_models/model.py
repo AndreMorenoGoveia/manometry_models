@@ -6,6 +6,7 @@ import torch
 from torch import nn
 from torchvision import models
 
+from manometry_models.graph_model import WangCVPGAT
 from manometry_models.model_registry import (
     DEFAULT_IMAGE_SIZE_BY_MODEL,
     DEFAULT_NORMALIZATION_MEAN,
@@ -67,6 +68,12 @@ class ModelConfig:
     normalization_std: tuple[float, float, float]
     dropout: float
     aux_logits: bool
+    graph_num_nodes: int
+    graph_temporal_bins: int
+    graph_hidden_dim: int
+    graph_num_heads: int
+    graph_num_layers: int
+    graph_radius: int
 
 
 def get_default_image_size(model_name: str) -> int:
@@ -83,6 +90,12 @@ def build_model_config(
     dropout: float,
     image_size: int | None = None,
     aux_logits: bool | None = None,
+    graph_num_nodes: int = 6,
+    graph_temporal_bins: int = 8,
+    graph_hidden_dim: int = 256,
+    graph_num_heads: int = 4,
+    graph_num_layers: int = 2,
+    graph_radius: int = 2,
 ) -> ModelConfig:
     normalized = model_name.lower()
     if normalized not in SUPPORTED_MODEL_NAMES:
@@ -103,6 +116,12 @@ def build_model_config(
         normalization_std=normalization_std,
         dropout=dropout,
         aux_logits=resolved_aux_logits,
+        graph_num_nodes=graph_num_nodes,
+        graph_temporal_bins=graph_temporal_bins,
+        graph_hidden_dim=graph_hidden_dim,
+        graph_num_heads=graph_num_heads,
+        graph_num_layers=graph_num_layers,
+        graph_radius=graph_radius,
     )
 
 
@@ -111,6 +130,19 @@ def create_model(config: ModelConfig, num_classes: int) -> nn.Module:
 
     if model_name == "cnn":
         return ManometryCNN(num_classes=num_classes, dropout=config.dropout)
+
+    if model_name == "wang_cvp_gat":
+        return WangCVPGAT(
+            num_classes=num_classes,
+            pretrained=config.pretrained,
+            dropout=config.dropout,
+            num_graph_nodes=config.graph_num_nodes,
+            graph_temporal_bins=config.graph_temporal_bins,
+            graph_hidden_dim=config.graph_hidden_dim,
+            graph_num_heads=config.graph_num_heads,
+            graph_num_layers=config.graph_num_layers,
+            graph_radius=config.graph_radius,
+        )
 
     if model_name == "resnet18":
         weights = models.ResNet18_Weights.DEFAULT if config.pretrained else None

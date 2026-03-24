@@ -57,6 +57,12 @@ def main() -> None:
         dropout=dropout,
         image_size=image_size,
         aux_logits=aux_logits,
+        graph_num_nodes=int(checkpoint.get("graph_num_nodes", 6)),
+        graph_temporal_bins=int(checkpoint.get("graph_temporal_bins", 8)),
+        graph_hidden_dim=int(checkpoint.get("graph_hidden_dim", 256)),
+        graph_num_heads=int(checkpoint.get("graph_num_heads", 4)),
+        graph_num_layers=int(checkpoint.get("graph_num_layers", 2)),
+        graph_radius=int(checkpoint.get("graph_radius", 2)),
     )
     model = create_model(model_config, num_classes=len(class_names))
     model.load_state_dict(checkpoint["model_state_dict"])

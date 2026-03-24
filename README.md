@@ -74,6 +74,7 @@ Se quiser reproduzir exatamente o conteúdo bruto de `data/train`, rode o treino
 | Modelo | Tipo | Tamanho padrão |
 | --- | --- | ---: |
 | `cnn` | CNN própria | 224 |
+| `wang_cvp_gat` | grafo de atenção inspirado no artigo do Wang | 224 |
 | `resnet18` | backbone `torchvision` | 224 |
 | `efficientnet_b0` | backbone `torchvision` | 224 |
 | `convnext_tiny` | backbone `torchvision` | 224 |
@@ -83,6 +84,8 @@ Se quiser reproduzir exatamente o conteúdo bruto de `data/train`, rode o treino
 Observações:
 
 - `cnn` não usa pesos pré-treinados.
+- `wang_cvp_gat` usa um encoder convolucional baseado em `ResNet18` e depois constrói um grafo esparso sobre a imagem de HRM.
+- Na configuração padrão, o modelo usa `6` nós verticais, aproximando as seis regiões de vigor discutidas no artigo, e combina correlação de representação com correlação posicional relativa.
 - Os demais backbones podem usar `--pretrained`.
 - Quando `--pretrained` é usado, a normalização muda para o padrão ImageNet.
 - O `predict_cnn.py` recupera do checkpoint o backbone, o tamanho de imagem e a normalização usados no treino.
@@ -125,6 +128,12 @@ Argumentos principais:
 - `--learning-rate`
 - `--weight-decay`
 - `--dropout`
+- `--graph-num-nodes`
+- `--graph-temporal-bins`
+- `--graph-hidden-dim`
+- `--graph-num-heads`
+- `--graph-num-layers`
+- `--graph-radius`
 - `--num-workers`
 - `--augment`
 - `--device auto|cpu|cuda|mps`
@@ -199,6 +208,21 @@ python3 train_cnn.py \
   --model inception_v3 \
   --pretrained \
   --output-dir artifacts/inception_v3_pretrained
+```
+
+### Wang CVP-GAT
+
+```bash
+python3 train_cnn.py \
+  --model wang_cvp_gat \
+  --pretrained \
+  --graph-num-nodes 6 \
+  --graph-temporal-bins 8 \
+  --graph-hidden-dim 256 \
+  --graph-num-heads 4 \
+  --graph-num-layers 2 \
+  --graph-radius 2 \
+  --output-dir artifacts/wang_cvp_gat_pretrained
 ```
 
 Como o `inception_v3` usa tamanho padrão `299`, não é necessário passar `--image-size` se você quiser o comportamento padrão do código.

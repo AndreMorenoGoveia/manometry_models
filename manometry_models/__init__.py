@@ -3,6 +3,7 @@
 __all__ = [
     "data",
     "dataset_rules",
+    "graph_model",
     "metrics",
     "model",
     "model_registry",

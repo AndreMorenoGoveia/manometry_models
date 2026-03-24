@@ -1,0 +1,102 @@
+{
+  "accuracy": 0.9783080260303688,
+  "macro_precision": 0.9849854111671448,
+  "macro_recall": 0.9813759326934814,
+  "macro_f1": 0.9829449653625488,
+  "weighted_f1": 0.9781604409217834,
+  "per_class": [
+    {
+      "class_name": "Bradycardia_type_II",
+      "support": 35,
+      "precision": 1.0,
+      "recall": 0.9714285731315613,
+      "f1_score": 0.9855071902275085
+    },
+    {
+      "class_name": "DES",
+      "support": 67,
+      "precision": 0.9571428298950195,
+      "recall": 1.0,
+      "f1_score": 0.9781021475791931
+    },
+    {
+      "class_name": "EGJ",
+      "support": 48,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0
+    },
+    {
+      "class_name": "IEM",
+      "support": 96,
+      "precision": 0.9780219793319702,
+      "recall": 0.9270833134651184,
+      "f1_score": 0.9518716335296631
+    },
+    {
+      "class_name": "Jackhammer",
+      "support": 20,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0
+    },
+    {
+      "class_name": "normal",
+      "support": 195,
+      "precision": 0.9747474789619446,
+      "recall": 0.9897435903549194,
+      "f1_score": 0.9821882247924805
+    }
+  ],
+  "confusion_matrix": [
+    [
+      34,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      67,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      48,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      3,
+      0,
+      89,
+      0,
+      4
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      20,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      2,
+      0,
+      193
+    ]
+  ],
+  "loss": 0.11399971470014554
+}

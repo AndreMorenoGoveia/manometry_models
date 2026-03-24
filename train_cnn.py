@@ -31,6 +31,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--learning-rate", type=float, default=1e-3, help="Initial learning rate.")
     parser.add_argument("--weight-decay", type=float, default=1e-4, help="AdamW weight decay.")
     parser.add_argument("--dropout", type=float, default=0.35, help="Dropout rate used in the custom CNN classifier head.")
+    parser.add_argument("--graph-num-nodes", type=int, default=6, help="Number of pooled graph nodes used by wang_cvp_gat.")
+    parser.add_argument("--graph-temporal-bins", type=int, default=8, help="Temporal bins pooled per graph node for wang_cvp_gat.")
+    parser.add_argument("--graph-hidden-dim", type=int, default=256, help="Hidden dimension for wang_cvp_gat graph tokens.")
+    parser.add_argument("--graph-num-heads", type=int, default=4, help="Attention heads per graph block for wang_cvp_gat.")
+    parser.add_argument("--graph-num-layers", type=int, default=2, help="Graph attention blocks used by wang_cvp_gat.")
+    parser.add_argument("--graph-radius", type=int, default=2, help="Local neighborhood radius for sparse graph attention.")
     parser.add_argument("--num-workers", type=int, default=2, help="DataLoader worker processes.")
     parser.add_argument("--seed", type=int, default=42, help="Random seed.")
     parser.add_argument(
@@ -74,6 +80,18 @@ def main() -> None:
         raise ValueError("--batch-size must be at least 1.")
     if args.image_size is not None and args.image_size < 32:
         raise ValueError("--image-size must be at least 32.")
+    if args.graph_num_nodes < 2:
+        raise ValueError("--graph-num-nodes must be at least 2.")
+    if args.graph_temporal_bins < 1:
+        raise ValueError("--graph-temporal-bins must be at least 1.")
+    if args.graph_hidden_dim < 8:
+        raise ValueError("--graph-hidden-dim must be at least 8.")
+    if args.graph_num_heads < 1:
+        raise ValueError("--graph-num-heads must be at least 1.")
+    if args.graph_num_layers < 1:
+        raise ValueError("--graph-num-layers must be at least 1.")
+    if args.graph_radius < 0:
+        raise ValueError("--graph-radius must be at least 0.")
 
     set_seed(args.seed)
     device = resolve_device(args.device)
@@ -84,6 +102,12 @@ def main() -> None:
         pretrained=args.pretrained,
         dropout=args.dropout,
         image_size=args.image_size,
+        graph_num_nodes=args.graph_num_nodes,
+        graph_temporal_bins=args.graph_temporal_bins,
+        graph_hidden_dim=args.graph_hidden_dim,
+        graph_num_heads=args.graph_num_heads,
+        graph_num_layers=args.graph_num_layers,
+        graph_radius=args.graph_radius,
     )
     run_name = args.run_name or (
         f"{model_config.model_name}_pretrained" if model_config.pretrained else model_config.model_name
@@ -104,6 +128,18 @@ def main() -> None:
     print(f"Model: {model_config.model_name}")
     print(f"Pretrained: {model_config.pretrained}")
     print(f"Image size: {model_config.image_size}")
+    if model_config.model_name == "wang_cvp_gat":
+        print(
+            "Graph config:",
+            {
+                "num_nodes": model_config.graph_num_nodes,
+                "temporal_bins": model_config.graph_temporal_bins,
+                "hidden_dim": model_config.graph_hidden_dim,
+                "num_heads": model_config.graph_num_heads,
+                "num_layers": model_config.graph_num_layers,
+                "radius": model_config.graph_radius,
+            },
+        )
     print(f"Artifacts dir: {output_dir}")
     print("Training images per class (effective):", bundle.class_counts)
     if any(bundle.excluded_train_class_counts.values()):
@@ -146,6 +182,12 @@ def main() -> None:
             "normalization_mean": list(model_config.normalization_mean),
             "normalization_std": list(model_config.normalization_std),
             "aux_logits": model_config.aux_logits,
+            "graph_num_nodes": model_config.graph_num_nodes,
+            "graph_temporal_bins": model_config.graph_temporal_bins,
+            "graph_hidden_dim": model_config.graph_hidden_dim,
+            "graph_num_heads": model_config.graph_num_heads,
+            "graph_num_layers": model_config.graph_num_layers,
+            "graph_radius": model_config.graph_radius,
         },
     )
 
