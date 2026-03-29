@@ -8,3 +8,4 @@ artifacts/**
 !artifacts/**/*.json
 !artifacts/**/*.svg
 data_clean/
+*.codex
