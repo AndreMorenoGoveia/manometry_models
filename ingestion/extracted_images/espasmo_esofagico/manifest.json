@@ -1,0 +1,88 @@
+{
+  "pdf": "ingestion/pdfs/Espasmo Esofágico.pdf",
+  "output_dir": "ingestion/extracted_images/espasmo_esofagico",
+  "saved_images": 10,
+  "duplicates_skipped": 0,
+  "images": [
+    {
+      "page": 3,
+      "source_image_name": "X12.png",
+      "width": 420,
+      "height": 547,
+      "sha256": "bc1985cf98e9e1672b3972c5396e6e91455e85b82c016e1ae9cd10f9ecdc5045",
+      "saved_as": "image_001_p03_x12.png"
+    },
+    {
+      "page": 3,
+      "source_image_name": "X14.png",
+      "width": 420,
+      "height": 547,
+      "sha256": "3f8e8c13d7e0f8c647f802d7ff16c6aec59f326f159d6a7ca901023a84382a46",
+      "saved_as": "image_002_p03_x14.png"
+    },
+    {
+      "page": 4,
+      "source_image_name": "X17.png",
+      "width": 420,
+      "height": 547,
+      "sha256": "de50f6a03647d5cd639191159ff039f381afde2dbaa41211ac91f5f81a18dc45",
+      "saved_as": "image_003_p04_x17.png"
+    },
+    {
+      "page": 4,
+      "source_image_name": "X18.png",
+      "width": 420,
+      "height": 547,
+      "sha256": "73d9717f09c89923c2671a8df3c2f68164bc113ef4b202377f4442eb3b1900cd",
+      "saved_as": "image_004_p04_x18.png"
+    },
+    {
+      "page": 5,
+      "source_image_name": "X21.png",
+      "width": 420,
+      "height": 547,
+      "sha256": "6198ed3bfae339603ff1ebebd95a947f46185b593026028cc2e69bd3b60e6c99",
+      "saved_as": "image_005_p05_x21.png"
+    },
+    {
+      "page": 5,
+      "source_image_name": "X22.png",
+      "width": 420,
+      "height": 547,
+      "sha256": "bc7f3f77bcb422e4a343650bdd49b9937cea8f53177f6f21bdcd69915c939e09",
+      "saved_as": "image_006_p05_x22.png"
+    },
+    {
+      "page": 6,
+      "source_image_name": "X25.png",
+      "width": 420,
+      "height": 547,
+      "sha256": "61cc2d5afa487c700cb42143ea8a3ca34a70ec2c5fa6649b97601a259882a5f4",
+      "saved_as": "image_007_p06_x25.png"
+    },
+    {
+      "page": 6,
+      "source_image_name": "X26.png",
+      "width": 420,
+      "height": 547,
+      "sha256": "cf29d0c6815515b0458df78f21dac8e7ce26c2a2a0d0d46160b954d7bf420b91",
+      "saved_as": "image_008_p06_x26.png"
+    },
+    {
+      "page": 7,
+      "source_image_name": "X29.png",
+      "width": 420,
+      "height": 547,
+      "sha256": "f12a4a44762b8ed7be0da18c6682ce2bedc038cb3420d3abfd6d3583937a412d",
+      "saved_as": "image_009_p07_x29.png"
+    },
+    {
+      "page": 7,
+      "source_image_name": "X30.png",
+      "width": 420,
+      "height": 547,
+      "sha256": "02a3449a3f4417e00bf51fae061acfbc04b34fbf8884d50ac569693d653e92f5",
+      "saved_as": "image_010_p07_x30.png"
+    }
+  ]
+}
