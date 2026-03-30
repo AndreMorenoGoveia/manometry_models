@@ -31,6 +31,7 @@ class ExtractionCandidate:
     image_name: str
     image: Image.Image
     sha256: str
+    crop_box: tuple[int, int, int, int] | None = None
 
     @property
     def width(self) -> int:
@@ -101,6 +102,34 @@ def open_embedded_image(image_bytes: bytes) -> Image.Image:
         return image.convert("RGB")
 
 
+def find_dark_indices(image: Image.Image, *, axis: int, threshold: float = 30.0) -> list[int]:
+    import numpy as np
+
+    rgb = np.asarray(image.convert("RGB"), dtype=float)
+    means = rgb.mean(axis=(1, 2)) if axis == 0 else rgb.mean(axis=(0, 2))
+    return [index for index, value in enumerate(means.tolist()) if value < threshold]
+
+
+def crop_to_manometry_region(image: Image.Image) -> tuple[Image.Image, tuple[int, int, int, int] | None]:
+    dark_rows = find_dark_indices(image, axis=0)
+    dark_cols = find_dark_indices(image, axis=1)
+
+    if len(dark_rows) < 4 or len(dark_cols) < 4:
+        return image, None
+
+    top = dark_rows[1] + 1
+    bottom = dark_rows[-2]
+    left = dark_cols[1] + 1
+    right = dark_cols[-2]
+
+    if top >= bottom or left >= right:
+        return image, None
+
+    crop_box = (left, top, right, bottom)
+    cropped = image.crop(crop_box)
+    return cropped, crop_box
+
+
 def looks_like_exam_image(
     image: Image.Image,
     *,
@@ -140,13 +169,15 @@ def collect_candidates(
             ):
                 continue
 
-            sha256 = hashlib.sha256(image.tobytes()).hexdigest()
+            cropped_image, crop_box = crop_to_manometry_region(image)
+            sha256 = hashlib.sha256(cropped_image.tobytes()).hexdigest()
             candidates.append(
                 ExtractionCandidate(
                     page_number=page_number,
                     image_name=page_image.name,
-                    image=image,
+                    image=cropped_image,
                     sha256=sha256,
+                    crop_box=crop_box,
                 )
             )
 
@@ -181,6 +212,7 @@ def save_candidates(
                     "width": candidate.width,
                     "height": candidate.height,
                     "sha256": candidate.sha256,
+                    "crop_box": list(candidate.crop_box) if candidate.crop_box is not None else None,
                     "duplicate_of": seen_hashes[candidate.sha256],
                 }
             )
@@ -198,6 +230,7 @@ def save_candidates(
                 "width": candidate.width,
                 "height": candidate.height,
                 "sha256": candidate.sha256,
+                "crop_box": list(candidate.crop_box) if candidate.crop_box is not None else None,
                 "saved_as": filename,
             }
         )

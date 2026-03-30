@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "checkpoint": "artifacts/densenet201_pretrained/best_model.pt",
+    "model_name": "densenet201",
+    "input_dir": "ingestion/extracted_images",
+    "device": "cpu",
+    "top_k": 3,
+    "class_names": [
+      "Bradycardia_type_II",
+      "DES",
+      "EGJ",
+      "IEM",
+      "Jackhammer",
+      "normal"
+    ],
+    "total_images": 30
+  },
+  "summary": {
+    "overall": {
+      "total_images": 30,
+      "predicted_class_distribution": {
+        "Bradycardia_type_II": 10,
+        "DES": 5,
+        "EGJ": 3,
+        "IEM": 11,
+        "Jackhammer": 0,
+        "normal": 1
+      },
+      "mean_confidence_by_predicted_class": {
+        "Bradycardia_type_II": 0.6820911586284637,
+        "DES": 0.6002178311347961,
+        "EGJ": 0.7335904836654663,
+        "IEM": 0.9554489363323558,
+        "Jackhammer": null,
+        "normal": 0.525248646736145
+      }
+    },
+    "by_folder": [
+      {
+        "folder_name": "acalasia_tipo_i",
+        "total_images": 10,
+        "dominant_prediction": "IEM",
+        "dominant_prediction_count": 10,
+        "dominant_prediction_ratio": 1.0,
+        "mean_confidence": 0.9968015313148498,
+        "predicted_class_distribution": {
+          "IEM": 10
+        },
+        "expected_class_from_folder_name": null,
+        "expected_class_match_count": null
+      },
+      {
+        "folder_name": "acalasia_tipo_ii",
+        "total_images": 10,
+        "dominant_prediction": "Bradycardia_type_II",
+        "dominant_prediction_count": 6,
+        "dominant_prediction_ratio": 0.6,
+        "mean_confidence": 0.7430266261100769,
+        "predicted_class_distribution": {
+          "Bradycardia_type_II": 6,
+          "EGJ": 3,
+          "IEM": 1
+        },
+        "expected_class_from_folder_name": null,
+        "expected_class_match_count": null
+      },
+      {
+        "folder_name": "espasmo_esofagico",
+        "total_images": 10,
+        "dominant_prediction": "DES",
+        "dominant_prediction_count": 5,
+        "dominant_prediction_ratio": 0.5,
+        "mean_confidence": 0.5659677565097809,
+        "predicted_class_distribution": {
+          "Bradycardia_type_II": 4,
+          "DES": 5,
+          "normal": 1
+        },
+        "expected_class_from_folder_name": null,
+        "expected_class_match_count": null
+      }
+    ]
+  }
+}

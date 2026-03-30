@@ -1,0 +1,650 @@
+{
+  "metadata": {
+    "checkpoint": "artifacts/densenet201_pretrained/best_model.pt",
+    "model_name": "densenet201",
+    "input_dir": "ingestion/extracted_images",
+    "device": "cpu",
+    "top_k": 3,
+    "class_names": [
+      "Bradycardia_type_II",
+      "DES",
+      "EGJ",
+      "IEM",
+      "Jackhammer",
+      "normal"
+    ],
+    "total_images": 30
+  },
+  "predictions": [
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_i/image_001_p02_x13.png",
+      "folder_name": "acalasia_tipo_i",
+      "image_name": "image_001_p02_x13.png",
+      "predicted_class": "IEM",
+      "confidence": 0.9904876351356506,
+      "top_k": [
+        {
+          "class_name": "IEM",
+          "probability": 0.9904876351356506
+        },
+        {
+          "class_name": "DES",
+          "probability": 0.008516140282154083
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.0004873853758908808
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_i/image_002_p02_x14.png",
+      "folder_name": "acalasia_tipo_i",
+      "image_name": "image_002_p02_x14.png",
+      "predicted_class": "IEM",
+      "confidence": 0.9980960488319397,
+      "top_k": [
+        {
+          "class_name": "IEM",
+          "probability": 0.9980960488319397
+        },
+        {
+          "class_name": "DES",
+          "probability": 0.0014910788740962744
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.00023528706515207887
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_i/image_003_p02_x15.png",
+      "folder_name": "acalasia_tipo_i",
+      "image_name": "image_003_p02_x15.png",
+      "predicted_class": "IEM",
+      "confidence": 0.9976264834403992,
+      "top_k": [
+        {
+          "class_name": "IEM",
+          "probability": 0.9976264834403992
+        },
+        {
+          "class_name": "DES",
+          "probability": 0.0016861788462847471
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.0003006853221450001
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_i/image_004_p02_x16.png",
+      "folder_name": "acalasia_tipo_i",
+      "image_name": "image_004_p02_x16.png",
+      "predicted_class": "IEM",
+      "confidence": 0.9987841248512268,
+      "top_k": [
+        {
+          "class_name": "IEM",
+          "probability": 0.9987841248512268
+        },
+        {
+          "class_name": "DES",
+          "probability": 0.0008860203670337796
+        },
+        {
+          "class_name": "normal",
+          "probability": 0.00016985756519716233
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_i/image_005_p03_x19.png",
+      "folder_name": "acalasia_tipo_i",
+      "image_name": "image_005_p03_x19.png",
+      "predicted_class": "IEM",
+      "confidence": 0.996246874332428,
+      "top_k": [
+        {
+          "class_name": "IEM",
+          "probability": 0.996246874332428
+        },
+        {
+          "class_name": "DES",
+          "probability": 0.003245958359912038
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.00028165854746475816
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_i/image_006_p03_x20.png",
+      "folder_name": "acalasia_tipo_i",
+      "image_name": "image_006_p03_x20.png",
+      "predicted_class": "IEM",
+      "confidence": 0.9976188540458679,
+      "top_k": [
+        {
+          "class_name": "IEM",
+          "probability": 0.9976188540458679
+        },
+        {
+          "class_name": "DES",
+          "probability": 0.001981798792257905
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.00019354104006197304
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_i/image_007_p03_x21.png",
+      "folder_name": "acalasia_tipo_i",
+      "image_name": "image_007_p03_x21.png",
+      "predicted_class": "IEM",
+      "confidence": 0.9987070560455322,
+      "top_k": [
+        {
+          "class_name": "IEM",
+          "probability": 0.9987070560455322
+        },
+        {
+          "class_name": "DES",
+          "probability": 0.0006243683747015893
+        },
+        {
+          "class_name": "normal",
+          "probability": 0.0003222795785404742
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_i/image_008_p03_x22.png",
+      "folder_name": "acalasia_tipo_i",
+      "image_name": "image_008_p03_x22.png",
+      "predicted_class": "IEM",
+      "confidence": 0.9962778687477112,
+      "top_k": [
+        {
+          "class_name": "IEM",
+          "probability": 0.9962778687477112
+        },
+        {
+          "class_name": "DES",
+          "probability": 0.0031001155730336905
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.00027457578107714653
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_i/image_009_p03_x23.png",
+      "folder_name": "acalasia_tipo_i",
+      "image_name": "image_009_p03_x23.png",
+      "predicted_class": "IEM",
+      "confidence": 0.995858371257782,
+      "top_k": [
+        {
+          "class_name": "IEM",
+          "probability": 0.995858371257782
+        },
+        {
+          "class_name": "DES",
+          "probability": 0.0032809977419674397
+        },
+        {
+          "class_name": "normal",
+          "probability": 0.000523313123267144
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_i/image_010_p03_x24.png",
+      "folder_name": "acalasia_tipo_i",
+      "image_name": "image_010_p03_x24.png",
+      "predicted_class": "IEM",
+      "confidence": 0.9983119964599609,
+      "top_k": [
+        {
+          "class_name": "IEM",
+          "probability": 0.9983119964599609
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.0007559485966339707
+        },
+        {
+          "class_name": "normal",
+          "probability": 0.0005157656851224601
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_ii/image_001_p01_im152.png",
+      "folder_name": "acalasia_tipo_ii",
+      "image_name": "image_001_p01_im152.png",
+      "predicted_class": "EGJ",
+      "confidence": 0.8459544777870178,
+      "top_k": [
+        {
+          "class_name": "EGJ",
+          "probability": 0.8459544777870178
+        },
+        {
+          "class_name": "IEM",
+          "probability": 0.09358188509941101
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.057809267193078995
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_ii/image_002_p01_im158.png",
+      "folder_name": "acalasia_tipo_ii",
+      "image_name": "image_002_p01_im158.png",
+      "predicted_class": "EGJ",
+      "confidence": 0.8144014477729797,
+      "top_k": [
+        {
+          "class_name": "EGJ",
+          "probability": 0.8144014477729797
+        },
+        {
+          "class_name": "IEM",
+          "probability": 0.09553481638431549
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.08805220574140549
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_ii/image_003_p01_im162.png",
+      "folder_name": "acalasia_tipo_ii",
+      "image_name": "image_003_p01_im162.png",
+      "predicted_class": "EGJ",
+      "confidence": 0.5404155254364014,
+      "top_k": [
+        {
+          "class_name": "EGJ",
+          "probability": 0.5404155254364014
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.4354117810726166
+        },
+        {
+          "class_name": "IEM",
+          "probability": 0.021595200523734093
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_ii/image_004_p01_im166.png",
+      "folder_name": "acalasia_tipo_ii",
+      "image_name": "image_004_p01_im166.png",
+      "predicted_class": "Bradycardia_type_II",
+      "confidence": 0.95074063539505,
+      "top_k": [
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.95074063539505
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.03090488538146019
+        },
+        {
+          "class_name": "IEM",
+          "probability": 0.011708837933838367
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_ii/image_005_p01_im174.png",
+      "folder_name": "acalasia_tipo_ii",
+      "image_name": "image_005_p01_im174.png",
+      "predicted_class": "Bradycardia_type_II",
+      "confidence": 0.9646456837654114,
+      "top_k": [
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.9646456837654114
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.018284618854522705
+        },
+        {
+          "class_name": "IEM",
+          "probability": 0.0143692372366786
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_ii/image_006_p01_im178.png",
+      "folder_name": "acalasia_tipo_ii",
+      "image_name": "image_006_p01_im178.png",
+      "predicted_class": "Bradycardia_type_II",
+      "confidence": 0.9584868550300598,
+      "top_k": [
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.9584868550300598
+        },
+        {
+          "class_name": "IEM",
+          "probability": 0.025517474859952927
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.010806577280163765
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_ii/image_007_p01_im182.png",
+      "folder_name": "acalasia_tipo_ii",
+      "image_name": "image_007_p01_im182.png",
+      "predicted_class": "Bradycardia_type_II",
+      "confidence": 0.6782114505767822,
+      "top_k": [
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.6782114505767822
+        },
+        {
+          "class_name": "IEM",
+          "probability": 0.255168616771698
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.05496174842119217
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_ii/image_008_p01_im207.png",
+      "folder_name": "acalasia_tipo_ii",
+      "image_name": "image_008_p01_im207.png",
+      "predicted_class": "IEM",
+      "confidence": 0.5419229865074158,
+      "top_k": [
+        {
+          "class_name": "IEM",
+          "probability": 0.5419229865074158
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.31484130024909973
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.10654306411743164
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_ii/image_009_p01_im211.png",
+      "folder_name": "acalasia_tipo_ii",
+      "image_name": "image_009_p01_im211.png",
+      "predicted_class": "Bradycardia_type_II",
+      "confidence": 0.5523910522460938,
+      "top_k": [
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.5523910522460938
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.30417802929878235
+        },
+        {
+          "class_name": "IEM",
+          "probability": 0.12630097568035126
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/acalasia_tipo_ii/image_010_p01_im215.png",
+      "folder_name": "acalasia_tipo_ii",
+      "image_name": "image_010_p01_im215.png",
+      "predicted_class": "Bradycardia_type_II",
+      "confidence": 0.5830961465835571,
+      "top_k": [
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.5830961465835571
+        },
+        {
+          "class_name": "IEM",
+          "probability": 0.2777833640575409
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.11755931377410889
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/espasmo_esofagico/image_001_p03_x12.png",
+      "folder_name": "espasmo_esofagico",
+      "image_name": "image_001_p03_x12.png",
+      "predicted_class": "normal",
+      "confidence": 0.525248646736145,
+      "top_k": [
+        {
+          "class_name": "normal",
+          "probability": 0.525248646736145
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.22222493588924408
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.19320842623710632
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/espasmo_esofagico/image_002_p03_x14.png",
+      "folder_name": "espasmo_esofagico",
+      "image_name": "image_002_p03_x14.png",
+      "predicted_class": "Bradycardia_type_II",
+      "confidence": 0.6614001989364624,
+      "top_k": [
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.6614001989364624
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.30463913083076477
+        },
+        {
+          "class_name": "DES",
+          "probability": 0.014993040822446346
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/espasmo_esofagico/image_003_p04_x17.png",
+      "folder_name": "espasmo_esofagico",
+      "image_name": "image_003_p04_x17.png",
+      "predicted_class": "DES",
+      "confidence": 0.6557230353355408,
+      "top_k": [
+        {
+          "class_name": "DES",
+          "probability": 0.6557230353355408
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.2538745701313019
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.07112924009561539
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/espasmo_esofagico/image_004_p04_x18.png",
+      "folder_name": "espasmo_esofagico",
+      "image_name": "image_004_p04_x18.png",
+      "predicted_class": "DES",
+      "confidence": 0.582879900932312,
+      "top_k": [
+        {
+          "class_name": "DES",
+          "probability": 0.582879900932312
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.35233864188194275
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.0452265739440918
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/espasmo_esofagico/image_005_p05_x21.png",
+      "folder_name": "espasmo_esofagico",
+      "image_name": "image_005_p05_x21.png",
+      "predicted_class": "Bradycardia_type_II",
+      "confidence": 0.5748493671417236,
+      "top_k": [
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.5748493671417236
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.1862298846244812
+        },
+        {
+          "class_name": "normal",
+          "probability": 0.1340147852897644
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/espasmo_esofagico/image_006_p05_x22.png",
+      "folder_name": "espasmo_esofagico",
+      "image_name": "image_006_p05_x22.png",
+      "predicted_class": "DES",
+      "confidence": 0.7864843010902405,
+      "top_k": [
+        {
+          "class_name": "DES",
+          "probability": 0.7864843010902405
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.12020239233970642
+        },
+        {
+          "class_name": "normal",
+          "probability": 0.04804946854710579
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/espasmo_esofagico/image_007_p06_x25.png",
+      "folder_name": "espasmo_esofagico",
+      "image_name": "image_007_p06_x25.png",
+      "predicted_class": "Bradycardia_type_II",
+      "confidence": 0.5375279188156128,
+      "top_k": [
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.5375279188156128
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.21253164112567902
+        },
+        {
+          "class_name": "normal",
+          "probability": 0.17291457951068878
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/espasmo_esofagico/image_008_p06_x26.png",
+      "folder_name": "espasmo_esofagico",
+      "image_name": "image_008_p06_x26.png",
+      "predicted_class": "Bradycardia_type_II",
+      "confidence": 0.3595622777938843,
+      "top_k": [
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.3595622777938843
+        },
+        {
+          "class_name": "normal",
+          "probability": 0.3205920159816742
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.16003203392028809
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/espasmo_esofagico/image_009_p07_x29.png",
+      "folder_name": "espasmo_esofagico",
+      "image_name": "image_009_p07_x29.png",
+      "predicted_class": "DES",
+      "confidence": 0.3363226652145386,
+      "top_k": [
+        {
+          "class_name": "DES",
+          "probability": 0.3363226652145386
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.32883450388908386
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.2596977651119232
+        }
+      ]
+    },
+    {
+      "image_path": "ingestion/extracted_images/espasmo_esofagico/image_010_p07_x30.png",
+      "folder_name": "espasmo_esofagico",
+      "image_name": "image_010_p07_x30.png",
+      "predicted_class": "DES",
+      "confidence": 0.6396792531013489,
+      "top_k": [
+        {
+          "class_name": "DES",
+          "probability": 0.6396792531013489
+        },
+        {
+          "class_name": "Bradycardia_type_II",
+          "probability": 0.19765843451023102
+        },
+        {
+          "class_name": "EGJ",
+          "probability": 0.104686439037323
+        }
+      ]
+    }
+  ]
+}

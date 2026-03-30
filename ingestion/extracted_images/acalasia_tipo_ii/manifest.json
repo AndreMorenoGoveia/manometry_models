@@ -7,241 +7,421 @@
     {
       "page": 1,
       "source_image_name": "Im152.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "25db0783c75ddd92a9df57f62628be9dd897e8ffd4ae3bd8d1d801ac90bd4801",
+      "width": 355,
+      "height": 553,
+      "sha256": "b68c1dbdd753d2e979d11339b03ee1dfed7cfb0c8f46c3faefb0274170feb406",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_001_p01_im152.png"
     },
     {
       "page": 1,
       "source_image_name": "Im158.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "a4bcbca58dabbd2e09c210b5c9d4e96db3d70d108817d2577a48d910af923440",
+      "width": 355,
+      "height": 553,
+      "sha256": "081919aab89446f2c66d487e6073e2cdb377dacdc1219da594788329723c83c0",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_002_p01_im158.png"
     },
     {
       "page": 1,
       "source_image_name": "Im162.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "2298d949c959c9b633e6ca1ce485373b9e4cf8bd761b94870f3773277d94fc08",
+      "width": 355,
+      "height": 553,
+      "sha256": "c045f8377a701d2d74c8d425f072a774ef4aac26a99a62cb0696b0dfdbae6837",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_003_p01_im162.png"
     },
     {
       "page": 1,
       "source_image_name": "Im166.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "c4fd2ac10cb4b9c9f77db96c2ba12a0fa1d2ba9fd01c80cf2e74db16eaeb244e",
+      "width": 355,
+      "height": 553,
+      "sha256": "0afdafdc687771cedd24f41066dfe4a7f2843d1218d966c5e3acee1bcabbd099",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_004_p01_im166.png"
     },
     {
       "page": 1,
       "source_image_name": "Im174.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "3414d3f0258e714021fbe89b1d3e77da9445de306d0ca356ece85a932ead21fe",
+      "width": 355,
+      "height": 553,
+      "sha256": "64e3bfd9709e1a6c2783553a588a0efd75c42dac1442248d455abef3f7c8abd7",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_005_p01_im174.png"
     },
     {
       "page": 1,
       "source_image_name": "Im178.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "705ec778c6bf46c3409c723ec11cdf1ea40d58cd0abb8c7b389a36ce7a8a3d02",
+      "width": 355,
+      "height": 553,
+      "sha256": "f83494129d4e32efe5e3a9f6c839066912aff7784818ee3f029ee182a2b189f8",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_006_p01_im178.png"
     },
     {
       "page": 1,
       "source_image_name": "Im182.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "07247b8ad32bdfcc0ee044de08f34fd1678a8a224f2afd132f500dbfaa508ec6",
+      "width": 355,
+      "height": 553,
+      "sha256": "be891795e2a219014f6832f60c28fc98fee5bedbb0de76943180957a1f064fc6",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_007_p01_im182.png"
     },
     {
       "page": 1,
       "source_image_name": "Im207.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "7422cca2ac1357dfcd75b68750054c143e60357f14b3853b32686bffafef35cf",
+      "width": 355,
+      "height": 553,
+      "sha256": "c877cbe89018d2194d43a4ab7fae63b5fd512524e800b8a9f48a5cf0acf93da6",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_008_p01_im207.png"
     },
     {
       "page": 1,
       "source_image_name": "Im211.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "a92c23ea67a95bf7566c06c9ab057d95df2ed3228752c7a1835c64684c673227",
+      "width": 355,
+      "height": 553,
+      "sha256": "8806a5dfbb5119d270d7e60e79ca2846184f5e8e12b41adfa630bc35649e5d67",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_009_p01_im211.png"
     },
     {
       "page": 1,
       "source_image_name": "Im215.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "0813ab0683bb276b4c319a427450134ea6f61f4d89e6b5740db46d43d6f8f4ab",
+      "width": 355,
+      "height": 553,
+      "sha256": "6d7a8c9d77f7a6a6e9b66235e5902b16e2ebbc62886110421dcb896aa7bd5c47",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_010_p01_im215.png"
     },
     {
       "page": 2,
       "source_image_name": "Im152.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "25db0783c75ddd92a9df57f62628be9dd897e8ffd4ae3bd8d1d801ac90bd4801",
+      "width": 355,
+      "height": 553,
+      "sha256": "b68c1dbdd753d2e979d11339b03ee1dfed7cfb0c8f46c3faefb0274170feb406",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_001_p01_im152.png"
     },
     {
       "page": 2,
       "source_image_name": "Im158.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "a4bcbca58dabbd2e09c210b5c9d4e96db3d70d108817d2577a48d910af923440",
+      "width": 355,
+      "height": 553,
+      "sha256": "081919aab89446f2c66d487e6073e2cdb377dacdc1219da594788329723c83c0",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_002_p01_im158.png"
     },
     {
       "page": 2,
       "source_image_name": "Im162.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "2298d949c959c9b633e6ca1ce485373b9e4cf8bd761b94870f3773277d94fc08",
+      "width": 355,
+      "height": 553,
+      "sha256": "c045f8377a701d2d74c8d425f072a774ef4aac26a99a62cb0696b0dfdbae6837",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_003_p01_im162.png"
     },
     {
       "page": 2,
       "source_image_name": "Im166.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "c4fd2ac10cb4b9c9f77db96c2ba12a0fa1d2ba9fd01c80cf2e74db16eaeb244e",
+      "width": 355,
+      "height": 553,
+      "sha256": "0afdafdc687771cedd24f41066dfe4a7f2843d1218d966c5e3acee1bcabbd099",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_004_p01_im166.png"
     },
     {
       "page": 2,
       "source_image_name": "Im174.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "3414d3f0258e714021fbe89b1d3e77da9445de306d0ca356ece85a932ead21fe",
+      "width": 355,
+      "height": 553,
+      "sha256": "64e3bfd9709e1a6c2783553a588a0efd75c42dac1442248d455abef3f7c8abd7",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_005_p01_im174.png"
     },
     {
       "page": 2,
       "source_image_name": "Im178.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "705ec778c6bf46c3409c723ec11cdf1ea40d58cd0abb8c7b389a36ce7a8a3d02",
+      "width": 355,
+      "height": 553,
+      "sha256": "f83494129d4e32efe5e3a9f6c839066912aff7784818ee3f029ee182a2b189f8",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_006_p01_im178.png"
     },
     {
       "page": 2,
       "source_image_name": "Im182.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "07247b8ad32bdfcc0ee044de08f34fd1678a8a224f2afd132f500dbfaa508ec6",
+      "width": 355,
+      "height": 553,
+      "sha256": "be891795e2a219014f6832f60c28fc98fee5bedbb0de76943180957a1f064fc6",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_007_p01_im182.png"
     },
     {
       "page": 2,
       "source_image_name": "Im207.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "7422cca2ac1357dfcd75b68750054c143e60357f14b3853b32686bffafef35cf",
+      "width": 355,
+      "height": 553,
+      "sha256": "c877cbe89018d2194d43a4ab7fae63b5fd512524e800b8a9f48a5cf0acf93da6",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_008_p01_im207.png"
     },
     {
       "page": 2,
       "source_image_name": "Im211.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "a92c23ea67a95bf7566c06c9ab057d95df2ed3228752c7a1835c64684c673227",
+      "width": 355,
+      "height": 553,
+      "sha256": "8806a5dfbb5119d270d7e60e79ca2846184f5e8e12b41adfa630bc35649e5d67",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_009_p01_im211.png"
     },
     {
       "page": 2,
       "source_image_name": "Im215.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "0813ab0683bb276b4c319a427450134ea6f61f4d89e6b5740db46d43d6f8f4ab",
+      "width": 355,
+      "height": 553,
+      "sha256": "6d7a8c9d77f7a6a6e9b66235e5902b16e2ebbc62886110421dcb896aa7bd5c47",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_010_p01_im215.png"
     },
     {
       "page": 3,
       "source_image_name": "Im152.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "25db0783c75ddd92a9df57f62628be9dd897e8ffd4ae3bd8d1d801ac90bd4801",
+      "width": 355,
+      "height": 553,
+      "sha256": "b68c1dbdd753d2e979d11339b03ee1dfed7cfb0c8f46c3faefb0274170feb406",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_001_p01_im152.png"
     },
     {
       "page": 3,
       "source_image_name": "Im158.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "a4bcbca58dabbd2e09c210b5c9d4e96db3d70d108817d2577a48d910af923440",
+      "width": 355,
+      "height": 553,
+      "sha256": "081919aab89446f2c66d487e6073e2cdb377dacdc1219da594788329723c83c0",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_002_p01_im158.png"
     },
     {
       "page": 3,
       "source_image_name": "Im162.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "2298d949c959c9b633e6ca1ce485373b9e4cf8bd761b94870f3773277d94fc08",
+      "width": 355,
+      "height": 553,
+      "sha256": "c045f8377a701d2d74c8d425f072a774ef4aac26a99a62cb0696b0dfdbae6837",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_003_p01_im162.png"
     },
     {
       "page": 3,
       "source_image_name": "Im166.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "c4fd2ac10cb4b9c9f77db96c2ba12a0fa1d2ba9fd01c80cf2e74db16eaeb244e",
+      "width": 355,
+      "height": 553,
+      "sha256": "0afdafdc687771cedd24f41066dfe4a7f2843d1218d966c5e3acee1bcabbd099",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_004_p01_im166.png"
     },
     {
       "page": 3,
       "source_image_name": "Im174.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "3414d3f0258e714021fbe89b1d3e77da9445de306d0ca356ece85a932ead21fe",
+      "width": 355,
+      "height": 553,
+      "sha256": "64e3bfd9709e1a6c2783553a588a0efd75c42dac1442248d455abef3f7c8abd7",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_005_p01_im174.png"
     },
     {
       "page": 3,
       "source_image_name": "Im178.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "705ec778c6bf46c3409c723ec11cdf1ea40d58cd0abb8c7b389a36ce7a8a3d02",
+      "width": 355,
+      "height": 553,
+      "sha256": "f83494129d4e32efe5e3a9f6c839066912aff7784818ee3f029ee182a2b189f8",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_006_p01_im178.png"
     },
     {
       "page": 3,
       "source_image_name": "Im182.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "07247b8ad32bdfcc0ee044de08f34fd1678a8a224f2afd132f500dbfaa508ec6",
+      "width": 355,
+      "height": 553,
+      "sha256": "be891795e2a219014f6832f60c28fc98fee5bedbb0de76943180957a1f064fc6",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_007_p01_im182.png"
     },
     {
       "page": 3,
       "source_image_name": "Im207.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "7422cca2ac1357dfcd75b68750054c143e60357f14b3853b32686bffafef35cf",
+      "width": 355,
+      "height": 553,
+      "sha256": "c877cbe89018d2194d43a4ab7fae63b5fd512524e800b8a9f48a5cf0acf93da6",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_008_p01_im207.png"
     },
     {
       "page": 3,
       "source_image_name": "Im211.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "a92c23ea67a95bf7566c06c9ab057d95df2ed3228752c7a1835c64684c673227",
+      "width": 355,
+      "height": 553,
+      "sha256": "8806a5dfbb5119d270d7e60e79ca2846184f5e8e12b41adfa630bc35649e5d67",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_009_p01_im211.png"
     },
     {
       "page": 3,
       "source_image_name": "Im215.jp2",
-      "width": 420,
-      "height": 599,
-      "sha256": "0813ab0683bb276b4c319a427450134ea6f61f4d89e6b5740db46d43d6f8f4ab",
+      "width": 355,
+      "height": 553,
+      "sha256": "6d7a8c9d77f7a6a6e9b66235e5902b16e2ebbc62886110421dcb896aa7bd5c47",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "duplicate_of": "image_010_p01_im215.png"
     }
   ]

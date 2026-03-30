@@ -7,81 +7,141 @@
     {
       "page": 2,
       "source_image_name": "X13.png",
-      "width": 420,
-      "height": 599,
-      "sha256": "83ee14d8588a02adb61ad0621a2c2a46f883221cd23bea7a4bd92a855cdb1927",
+      "width": 355,
+      "height": 553,
+      "sha256": "f42591967fdf7cd407828a316db7b0a70c96252dee7fd9b957f80a3e7f752bf8",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_001_p02_x13.png"
     },
     {
       "page": 2,
       "source_image_name": "X14.png",
-      "width": 420,
-      "height": 599,
-      "sha256": "e516894b27150c14b7d32fa1b532ef460ef1a6c5ad7ff272b8cc032e9d5529bd",
+      "width": 355,
+      "height": 553,
+      "sha256": "2ab40745ef8c8c04e5464806564d01c6035466d2b478c75972f68024d014c4df",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_002_p02_x14.png"
     },
     {
       "page": 2,
       "source_image_name": "X15.png",
-      "width": 420,
-      "height": 599,
-      "sha256": "1ac84bec771e952fc1abab0a55f237e2418cd7f8091a23dd4ec37200575f89f6",
+      "width": 355,
+      "height": 553,
+      "sha256": "198aed1394b39d6dcdfd24d59b0c81625c22c9245c10c6f735f30dc263999a7b",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_003_p02_x15.png"
     },
     {
       "page": 2,
       "source_image_name": "X16.png",
-      "width": 420,
-      "height": 599,
-      "sha256": "e8c976fd675e282adb8515513e82a1f62710637b275d86d7ef0c2ffd3e1c4b9a",
+      "width": 355,
+      "height": 553,
+      "sha256": "db28f071b29f39c03895ce286e5904ac60a81d6be7c106a0f94661a29e2cab3e",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_004_p02_x16.png"
     },
     {
       "page": 3,
       "source_image_name": "X19.png",
-      "width": 420,
-      "height": 599,
-      "sha256": "5ca4cfb0fb9038a1bad62922463464c411a3804b6c6cf3d4882ebf9a6b37b7cb",
+      "width": 355,
+      "height": 553,
+      "sha256": "c48bc78b1f43f3e54ab1353bf3ae8b24d5f171d264fa83f8a4acca811463804b",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_005_p03_x19.png"
     },
     {
       "page": 3,
       "source_image_name": "X20.png",
-      "width": 420,
-      "height": 599,
-      "sha256": "b2ddca46fc8f0093ed5805b6a930bef18b0323f12375ffdb316afc0afa37c4fa",
+      "width": 355,
+      "height": 553,
+      "sha256": "0ad9dea98953aac7fff6ee8c3b5f2c8cfeeb26b7cc0d4e62e8e5a5bca7cbf0f2",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_006_p03_x20.png"
     },
     {
       "page": 3,
       "source_image_name": "X21.png",
-      "width": 420,
-      "height": 599,
-      "sha256": "66fd056e2fd8c54f885eea1583cad153e3047c30ae13602fc4061d2a6ac81ddc",
+      "width": 355,
+      "height": 553,
+      "sha256": "8d5973412effa47ee3763f4cc616282fd8212ab08c0d460ad2a61f960987e026",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_007_p03_x21.png"
     },
     {
       "page": 3,
       "source_image_name": "X22.png",
-      "width": 420,
-      "height": 599,
-      "sha256": "492bd63dbb246f60cd27062b74528356c8ae3ab9b86d24467dff847a44df8baa",
+      "width": 355,
+      "height": 553,
+      "sha256": "7df9adfe5e00a7ad547abac3e3da30ddde65001b812682a868316fa66b024d61",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_008_p03_x22.png"
     },
     {
       "page": 3,
       "source_image_name": "X23.png",
-      "width": 420,
-      "height": 599,
-      "sha256": "8adff423f8d0fb2c14e82c7e54495744a3dfc0f1cee8c1629f8d778db056ebd6",
+      "width": 355,
+      "height": 553,
+      "sha256": "609bda81aba482f804fe14420e5e0e8482c3f37ca7a994de6b2900ff93aca92d",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_009_p03_x23.png"
     },
     {
       "page": 3,
       "source_image_name": "X24.png",
-      "width": 420,
-      "height": 599,
-      "sha256": "c41774cae943216cf3535ba5697674efb4bc0ceaeb82b3c27bd4151558065a0d",
+      "width": 355,
+      "height": 553,
+      "sha256": "3646849b873d2dd259986a15d79c591f89ebbe16b3ebaa0f92e1b4534c636ed8",
+      "crop_box": [
+        63,
+        29,
+        418,
+        582
+      ],
       "saved_as": "image_010_p03_x24.png"
     }
   ]
