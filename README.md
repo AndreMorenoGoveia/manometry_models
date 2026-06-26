@@ -126,6 +126,26 @@ Observações:
 - Quando `--pretrained` é usado, a normalização muda para o padrão ImageNet.
 - O `predict_cnn.py` recupera do checkpoint o backbone, o tamanho de imagem e a normalização usados no treino.
 
+## Resultados
+
+Métricas no conjunto de teste (`data/test`), extraídas de cada `artifacts/<modelo>/test_metrics.json` e ordenadas por acurácia.
+
+| Modelo | Acurácia | Macro F1 | Macro Precisão | Macro Recall | Weighted F1 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `densenet201` | 0,989 | 0,991 | 0,991 | 0,991 | 0,989 |
+| `inception_v3` | 0,980 | 0,985 | 0,984 | 0,986 | 0,980 |
+| `wang_cvp_gat` | 0,978 | 0,983 | 0,985 | 0,981 | 0,978 |
+| `efficientnet_b0` | 0,974 | 0,980 | 0,981 | 0,981 | 0,974 |
+| `resnet18` | 0,970 | 0,977 | 0,976 | 0,980 | 0,970 |
+| `convnext_tiny` | 0,967 | 0,975 | 0,981 | 0,969 | 0,967 |
+| `cnn` | 0,850 | 0,882 | 0,890 | 0,880 | 0,856 |
+
+Observações:
+
+- Todos os backbones pré-treinados ficam entre `0,967` e `0,989` de acurácia, bem acima da CNN própria (`0,850`), que não usa pesos pré-treinados.
+- O `wang_cvp_gat` usa o mesmo encoder `ResNet18`, mas o módulo de grafo eleva a acurácia de `0,970` para `0,978`.
+- A maior fonte de erro recorrente é a separação entre `IEM`/`DES` e `normal`, visível nas matrizes de confusão em `artifacts/<modelo>/plots/confusion_matrix.svg`.
+
 ## Instalação
 
 Use Python 3.10 ou superior.

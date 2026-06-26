@@ -84,6 +84,40 @@ class SparseGraphAttentionBlock(nn.Module):
         return nodes
 
 
+def _build_graph_encoder(backbone: str, pretrained: bool) -> tuple[nn.Module, int]:
+    """Build a CNN feature extractor and report its output channel count.
+
+    Returns the encoder (a module producing a spatial feature map) alongside the
+    number of channels it emits, so the graph head can size its node projection
+    regardless of which backbone is used.
+    """
+    normalized = backbone.lower()
+    if normalized == "resnet18":
+        weights = models.ResNet18_Weights.DEFAULT if pretrained else None
+        model = models.resnet18(weights=weights)
+        encoder = nn.Sequential(
+            model.conv1,
+            model.bn1,
+            model.relu,
+            model.maxpool,
+            model.layer1,
+            model.layer2,
+            model.layer3,
+            model.layer4,
+        )
+        return encoder, 512
+
+    if normalized == "densenet201":
+        weights = models.DenseNet201_Weights.DEFAULT if pretrained else None
+        model = models.densenet201(weights=weights)
+        # densenet.features emits the final dense-block feature map; the trailing
+        # ReLU keeps activations consistent with the classifier path.
+        encoder = nn.Sequential(model.features, nn.ReLU(inplace=True))
+        return encoder, model.classifier.in_features
+
+    raise ValueError(f"Unsupported graph backbone: {backbone}. Supported: resnet18, densenet201")
+
+
 class WangCVPGAT(nn.Module):
     """Wang-inspired CVP-GAT for HRM image classification.
 
@@ -91,6 +125,9 @@ class WangCVPGAT(nn.Module):
     by pooling the CNN feature map into six vertical graph nodes and using a
     sparse graph attention stack that combines representation correlation and
     relative-position correlation.
+
+    The CNN backbone that produces the feature map is selectable (``resnet18``
+    or ``densenet201``); the graph head adapts to the backbone's channel count.
     """
 
     def __init__(
@@ -105,6 +142,7 @@ class WangCVPGAT(nn.Module):
         graph_num_heads: int,
         graph_num_layers: int,
         graph_radius: int,
+        backbone: str = "resnet18",
     ) -> None:
         super().__init__()
         if num_graph_nodes < 2:
@@ -118,25 +156,14 @@ class WangCVPGAT(nn.Module):
         if graph_num_heads < 1:
             raise ValueError("graph_num_heads must be at least 1.")
 
-        weights = models.ResNet18_Weights.DEFAULT if pretrained else None
-        backbone = models.resnet18(weights=weights)
-        self.encoder = nn.Sequential(
-            backbone.conv1,
-            backbone.bn1,
-            backbone.relu,
-            backbone.maxpool,
-            backbone.layer1,
-            backbone.layer2,
-            backbone.layer3,
-            backbone.layer4,
-        )
+        self.encoder, feature_channels = _build_graph_encoder(backbone, pretrained)
 
         self.num_graph_nodes = num_graph_nodes
         self.graph_temporal_bins = graph_temporal_bins
         self.feature_pool = nn.AdaptiveAvgPool2d((num_graph_nodes, graph_temporal_bins))
         self.node_projection = nn.Sequential(
-            nn.LayerNorm(512 * graph_temporal_bins),
-            nn.Linear(512 * graph_temporal_bins, graph_hidden_dim),
+            nn.LayerNorm(feature_channels * graph_temporal_bins),
+            nn.Linear(feature_channels * graph_temporal_bins, graph_hidden_dim),
             nn.GELU(),
             nn.Dropout(dropout),
         )

@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from manometry_models.model_registry import SUPPORTED_MODEL_NAMES
+from manometry_models.model_registry import GRAPH_MODEL_BACKBONES, SUPPORTED_MODEL_NAMES
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -128,7 +128,8 @@ def main() -> None:
     print(f"Model: {model_config.model_name}")
     print(f"Pretrained: {model_config.pretrained}")
     print(f"Image size: {model_config.image_size}")
-    if model_config.model_name == "wang_cvp_gat":
+    if model_config.model_name in GRAPH_MODEL_BACKBONES:
+        print("Graph backbone:", GRAPH_MODEL_BACKBONES[model_config.model_name])
         print(
             "Graph config:",
             {

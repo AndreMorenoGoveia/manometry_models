@@ -11,6 +11,7 @@ from manometry_models.model_registry import (
     DEFAULT_IMAGE_SIZE_BY_MODEL,
     DEFAULT_NORMALIZATION_MEAN,
     DEFAULT_NORMALIZATION_STD,
+    GRAPH_MODEL_BACKBONES,
     IMAGENET_NORMALIZATION_MEAN,
     IMAGENET_NORMALIZATION_STD,
     SUPPORTED_MODEL_NAMES,
@@ -131,7 +132,7 @@ def create_model(config: ModelConfig, num_classes: int) -> nn.Module:
     if model_name == "cnn":
         return ManometryCNN(num_classes=num_classes, dropout=config.dropout)
 
-    if model_name == "wang_cvp_gat":
+    if model_name in GRAPH_MODEL_BACKBONES:
         return WangCVPGAT(
             num_classes=num_classes,
             pretrained=config.pretrained,
@@ -142,6 +143,7 @@ def create_model(config: ModelConfig, num_classes: int) -> nn.Module:
             graph_num_heads=config.graph_num_heads,
             graph_num_layers=config.graph_num_layers,
             graph_radius=config.graph_radius,
+            backbone=GRAPH_MODEL_BACKBONES[model_name],
         )
 
     if model_name == "resnet18":

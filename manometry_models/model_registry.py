@@ -3,6 +3,7 @@ from __future__ import annotations
 SUPPORTED_MODEL_NAMES = (
     "cnn",
     "wang_cvp_gat",
+    "wang_cvp_gat_densenet201",
     "resnet18",
     "efficientnet_b0",
     "convnext_tiny",
@@ -10,9 +11,16 @@ SUPPORTED_MODEL_NAMES = (
     "inception_v3",
 )
 
+# Graph models share the wang_cvp_gat head but differ in their CNN backbone.
+GRAPH_MODEL_BACKBONES = {
+    "wang_cvp_gat": "resnet18",
+    "wang_cvp_gat_densenet201": "densenet201",
+}
+
 DEFAULT_IMAGE_SIZE_BY_MODEL = {
     "cnn": 224,
     "wang_cvp_gat": 224,
+    "wang_cvp_gat_densenet201": 224,
     "resnet18": 224,
     "efficientnet_b0": 224,
     "convnext_tiny": 224,
