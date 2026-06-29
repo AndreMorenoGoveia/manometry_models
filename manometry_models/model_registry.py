@@ -9,6 +9,7 @@ SUPPORTED_MODEL_NAMES = (
     "convnext_tiny",
     "densenet201",
     "inception_v3",
+    "vit_base",
 )
 
 # Graph models share the wang_cvp_gat head but differ in their CNN backbone.
@@ -26,6 +27,8 @@ DEFAULT_IMAGE_SIZE_BY_MODEL = {
     "convnext_tiny": 224,
     "densenet201": 224,
     "inception_v3": 299,
+    # ViT-B/16 uses the SWAG E2E weights, which are fine-tuned at 384px.
+    "vit_base": 384,
 }
 
 DEFAULT_NORMALIZATION_MEAN = (0.5, 0.5, 0.5)

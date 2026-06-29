@@ -180,4 +180,17 @@ def create_model(config: ModelConfig, num_classes: int) -> nn.Module:
             model.AuxLogits.fc = nn.Linear(model.AuxLogits.fc.in_features, num_classes)
         return model
 
+    if model_name == "vit_base":
+        if config.pretrained:
+            # SWAG E2E weights (ImageNet-1K acc@1 85.3%) are the strongest
+            # ViT-B/16 checkpoint in torchvision and transfer best on small
+            # datasets. They are fine-tuned at 384px and fix the model image
+            # size accordingly, so we must not override image_size here.
+            weights = models.ViT_B_16_Weights.IMAGENET1K_SWAG_E2E_V1
+            model = models.vit_b_16(weights=weights)
+        else:
+            model = models.vit_b_16(weights=None, image_size=config.image_size)
+        model.heads.head = nn.Linear(model.heads.head.in_features, num_classes)
+        return model
+
     raise ValueError(f"Unsupported model: {model_name}")

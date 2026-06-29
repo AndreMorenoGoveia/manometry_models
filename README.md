@@ -116,6 +116,7 @@ Se quiser reproduzir exatamente o conteúdo bruto de `data/train`, rode o treino
 | `convnext_tiny` | backbone `torchvision` | 224 |
 | `densenet201` | backbone `torchvision` | 224 |
 | `inception_v3` | backbone `torchvision` | 299 |
+| `vit_base` | Vision Transformer ViT-B/16 `torchvision` | 384 |
 
 Observações:
 
@@ -123,6 +124,7 @@ Observações:
 - `wang_cvp_gat` usa um encoder convolucional baseado em `ResNet18` e depois constrói um grafo esparso sobre a imagem de HRM.
 - Na configuração padrão, o modelo usa `6` nós verticais, aproximando as seis regiões de vigor discutidas no artigo, e combina correlação de representação com correlação posicional relativa.
 - Os demais backbones podem usar `--pretrained`.
+- `vit_base` usa, com `--pretrained`, os pesos SWAG E2E (`ViT_B_16_Weights.IMAGENET1K_SWAG_E2E_V1`), os mais fortes do ViT-B/16 no `torchvision` (acc@1 85,3% no ImageNet-1K), ajustados em `384` px. Por isso o tamanho padrão é `384`; ao usar `--pretrained` não passe um `--image-size` diferente de `384`.
 - Quando `--pretrained` é usado, a normalização muda para o padrão ImageNet.
 - O `predict_cnn.py` recupera do checkpoint o backbone, o tamanho de imagem e a normalização usados no treino.
 
@@ -266,6 +268,15 @@ python3 train_cnn.py \
   --output-dir artifacts/inception_v3_pretrained
 ```
 
+### ViT-Base (ViT-B/16)
+
+```bash
+python3 train_cnn.py \
+  --model vit_base \
+  --pretrained \
+  --output-dir artifacts/vit_base_pretrained
+```
+
 ### Wang CVP-GAT
 
 ```bash
@@ -292,6 +303,7 @@ python3 train_cnn.py --model efficientnet_b0 --pretrained --output-dir artifacts
 python3 train_cnn.py --model convnext_tiny --pretrained --output-dir artifacts/convnext_tiny_pretrained
 python3 train_cnn.py --model densenet201 --pretrained --output-dir artifacts/densenet201_pretrained
 python3 train_cnn.py --model inception_v3 --pretrained --output-dir artifacts/inception_v3_pretrained
+python3 train_cnn.py --model vit_base --pretrained --output-dir artifacts/vit_base_pretrained
 ```
 
 ## Preparar uma Cópia Limpa do Dataset

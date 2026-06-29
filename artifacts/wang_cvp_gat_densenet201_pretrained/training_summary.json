@@ -1,6 +1,6 @@
 {
-  "best_epoch": 17,
-  "best_val_macro_f1": 0.9761404991149902,
+  "best_epoch": 20,
+  "best_val_macro_f1": 0.9455786347389221,
   "model_name": "wang_cvp_gat_densenet201",
   "pretrained": true,
   "dropout": 0.35,
